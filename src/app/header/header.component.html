@@ -6,16 +6,14 @@
       </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
-      <li  routerLinkActive="active" *ngIf="!getIsAuth()">
+      <li  routerLinkActive="active" *ngIf="!isAuth">
         <a routerLink="auth/signup">Créer un compte</a>
       </li>
-      <li routerLinkActive="active" *ngIf="!getIsAuth()">
+      <li routerLinkActive="active" *ngIf="!isAuth">
         <a routerLink="auth/signin">Je rentre dans le darkSide</a>
       </li>
-      <li>
-        <button type="button" (clic)="onSignOut()"
-        *ngIf="getIsAuth()"
-        routerLink="auth/signin">Je retourne du côté lumineux</button>
+      <li routerLinkActive="active" *ngIf="isAuth">
+        <a routerLink="auth/signin"  (click)="onSignOut()">Je retourne du côté lumineux</a>
       </li>
     </ul>
   </div>

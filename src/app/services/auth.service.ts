@@ -7,7 +7,7 @@ import { reject } from 'q';
   providedIn: 'root'
 })
 export class AuthService {
-
+static isAuth: boolean = false;
   constructor() { }
 
   createNewUser(email: string, password: string){
@@ -31,6 +31,7 @@ export class AuthService {
         firebase.auth().signInWithEmailAndPassword(email, password).then(
           ()=>{
             resolve();
+            AuthService.isAuth = true;
           },
           (error)=>{
             reject(error);
@@ -43,6 +44,7 @@ export class AuthService {
   signOutuser(){
     console.log('service signout');
     firebase.auth().signOut();
+    AuthService.isAuth = false;
   }
 
 }
