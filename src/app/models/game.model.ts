@@ -1,11 +1,13 @@
 export class Game{
+    title: string;
     photo: string;
-    nbJoueurs: number;
-    tpsJeux: number;
+    nbJoueursMin: number;
+    nbJoueursMax: number;
+    tpsJeux: string;
     synopsis: string;
-    categorie: string;
+    categorie: string[];
 
-    constructor(public title: string){
+    constructor(){
         
     }
 }

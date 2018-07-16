@@ -1,3 +1,15 @@
-<p>
-  single-game works!
-</p>
+<div class="row">
+  <div class="col-xs-12">
+    <div id="presentationLeft" class="rounded float-left">
+    <h1>{{ game.title }}</h1>
+    <!--<h3>Catégorie : {{ game.categorie }}</h3>-->
+    <h3>Nombre de joueurs : {{ game.nbJoueursMin }} à {{ game.nbJoueursMax }}</h3>
+    <h3>Temps de jeux : {{ game.tpsJeux }}</h3>
+    <p>{{ game.synopsis }}</p>
+  </div>
+  
+  <img  class="rounded float-right" id="smallViewPicture" [src]="game.photo"/>
+
+</div>
+<button class="btn btn-default" (click)="onBack()">Retour</button>
+</div>

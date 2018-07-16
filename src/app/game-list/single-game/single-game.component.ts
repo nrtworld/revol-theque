@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Game } from '../../models/game.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { GamesService } from '../../services/games.service';
 
 @Component({
   selector: 'app-single-game',
@@ -7,9 +10,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SingleGameComponent implements OnInit {
 
-  constructor() { }
+  game: Game;
+
+  constructor(private route: ActivatedRoute, private gameService: GamesService, private router: Router) { }
 
   ngOnInit() {
+    this.game = new Game();
+    const id = this.route.snapshot.params['id'];
+    this.gameService.getSingleGames(+id).then(
+      (game: Game)=>{
+        this.game = game;
+      }
+    );
+  }
+
+  onBack(){
+    this.router.navigate(['/games']);
   }
 
 }
