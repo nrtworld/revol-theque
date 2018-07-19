@@ -15,29 +15,46 @@ export class GameListComponent implements OnInit, OnDestroy {
   gamesSubscription: Subscription;
 
   constructor(private gameService: GamesService, private router: Router) { }
-
+  
   ngOnInit() {
+    //this.gameService.getGames();
     this.gamesSubscription = this.gameService.gamesSubject.subscribe(
       (games: Game[])=>{
         this.games = games;
       }
     );
     this.gameService.emitGames();
+    console.log('2 : ' + this.games);
   }
+
+  
+  
 
   onNewGame(){
     this.router.navigate(['/games','new']);
   }
 
   onDeleteGame(game: Game){
+    if(confirm('Voulez-vous réellement supprimer ce jeux de votre ludothèque ?')){
     this.gameService.removeGame(game);
+    }else{
+      return null;
+    }
   }
 
   onViewGame(id: number){
     this.router.navigate(['/games','view', id]);
   }
 
+  onEditGame(id: number){
+    this.router.navigate(['/games','edit',id]);
+  }
+
   ngOnDestroy(){
 this.gamesSubscription.unsubscribe();
   }
+
+
 }
+
+

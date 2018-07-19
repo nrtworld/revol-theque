@@ -10,13 +10,17 @@ export class GamesService {
   games: Game[] = [];
   gamesSubject = new Subject<Game[]>();
 
-  constructor() { }
+  constructor() {
+    this.getGames();
+   }
 
   emitGames(){
-    this.gamesSubject.next(this.games);
+    this.gamesSubject.next(this.games.slice());
+    console.log('service 1 : ' +this.games);
   }
 
   saveGames(){
+    this.games.sort(this.stringSort);
     firebase.database().ref('/games').set(this.games);
   }
 
@@ -28,32 +32,49 @@ export class GamesService {
 
   removeGame(game: Game) {
     if(game.photo){
-      const storageRef = firebase.storage().refFromURL(game.photo);
-      storageRef.delete().then(
-        ()=>{
-          console.log('photo supprimée');
-        },
-        (error)=>{
-          console.log('Erreur de suppression : ' + error);
-        }
-      );
+      this.deletePhotoInStorage(game.photo);
     }
-    const gameIndexToRemove = this.games.findIndex(
-      (gameEl) => {
-        if(gameEl === game) {
-          return true;
-        }
-      }
-    );
+    const gameIndexToRemove = this.getGameIndex(game);
     this.games.splice(gameIndexToRemove, 1);
     this.saveGames();
     this.emitGames();
   }
 
+  private deletePhotoInStorage(url: string) {
+    const storageRef = firebase.storage().refFromURL(url);
+    storageRef.delete().then(() => {
+      console.log('photo supprimée');
+    }, (error) => {
+      console.log('Erreur de suppression : ' + error);
+    });
+  }
+
+  editGame(oldGame: Game, newGame: Game, index: number) {
+    if (oldGame.photo) {
+      const oldUrl = oldGame.photo;
+      if (newGame.photo) {
+        const newUrl = newGame.photo;
+        if (oldUrl !== newUrl) {
+          this.deletePhotoInStorage(oldGame.photo);
+        }
+      } else {
+        this.deletePhotoInStorage(oldGame.photo);
+      }
+    }
+    this.games.splice(index, 1, newGame);
+    this.saveGames();
+    this.emitGames();
+  }
+
+  private getGameIndex(game: Game) {
+    return this.games.indexOf(game);
+  }
+
   getGames() {
     firebase.database().ref('/games')
       .on('value', (data: firebase.database.DataSnapshot) => {
-          this.games = data.val() ? data.val() : [];
+          this.games = data.val() ?data.val() : [];
+          //this.games.sort(this.stringSort);
           this.emitGames();
         }
       );
@@ -100,5 +121,26 @@ export class GamesService {
         );
       }
     );
+  }
+
+  private stringSort(a: Game, b: Game) {
+    const titreA = a.title.toLowerCase();
+    const titreB = b.title.toLowerCase();
+    let i: number = 0;
+    while ((i < a.title.length) && (i < titreB.length)) {
+      if (titreA[i] < titreB[i]){
+        return -1;
+      }
+      else if (titreA[i] > titreB[i]){
+        return 1;
+      }
+      if (titreA.length < titreB.length){
+        return -1;
+      }
+      else{
+        return 1;
+      }
+     ++i;
+    }
   }
 }

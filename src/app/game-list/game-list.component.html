@@ -1,21 +1,97 @@
+
+<div id="hautdepage"></div> 
+<a href="games#hautdepage" >
+<div id="onTop">
+  <img src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fx-wing.png?alt=media&token=50d138cb-5721-4030-818d-ab725ca2b215"
+  id="goOnTop">
+</div>
+</a>
 <div class="row">
-  <div class="col-xs-12">
-    <h2>Vos Jeux</h2>
-    <div class="list-group">
-      <button
-        class="list-group-item"
-        *ngFor="let game of games; let i = index"
-        (click)="onViewGame(i)">
-        <h3 class="list-group-item-heading">
+  <button class="btn btn-primary" style="margin-top: 2%;" (click)="onNewGame()">Nouveau Jeu</button>
+  <h2 style="width: 100%;">Vos Jeux</h2>
+  <div class="list-group" id="flex-container">
+
+    <!--##########################################################################################################################################-->
+    <div class="card" style="max-width: 286px;" id="oneGameContainer" *ngFor="let game of games; let i = index">
+      <div style="margin-bottom: 100px;" (click)="onViewGame(i)">
+        <div style="width: 286px;height: 286px">
+      <img class="card-img-top" *ngIf="game.photo" [src]="game.photo" alt="Responsive image" style="max-width: 286px;max-height: 286px;" />
+          </div>
+          <h5 class="card-title" style="overflow:hidden; text-overflow: ellipsis;white-space: nowrap;margin-top: 2%">
+            {{ game.title }}
+          </h5>
+          
+          <div  id="infoGame">
+          
+                <img style="max-width: 20%;" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2FStormtrooper%20-%2001%20(1).png?alt=media&token=852a402b-29b8-4a6c-9be6-4c955b938b66">
+
+              
+                <h6 style="width: 20%;text-align: center;margin-right: 20%;margin-top: 5%">  :   {{game.nbJoueursMin}} à {{game.nbJoueursMax}}</h6>
+        
+              
+              
+                <img style="max-width: 20%;margin-top: 2%" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fclock_icon-icons.com_64800.png?alt=media&token=3b0cbcd4-7f0b-4f02-9aca-fed7e7921516">
+              
+                <h6 style="width: 20%;margin-top: 4%;">  :   {{game.tpsJeux}} min</h6>
+              
+        </div>
+          
+          
+          <!-- <p class="list-group-item-text">{{ game.categorie }}</p>-->
+        </div>
+        <div style="position: absolute; bottom: 0px;" >
+          <img style="width: 20%;cursor: pointer;" class="rounded float-right" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fcroix%20laser.png?alt=media&token=0cfd57ce-3b00-4a52-a8c5-f0d5256114e5"
+            id="icones" (click)="onDeleteGame(game)">
+       
+        <img style="width: 30%;cursor: pointer;" class="rounded float-left" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fedit.png?alt=media&token=4f4dae2a-b68a-4046-aa40-cc28a2dd5206"
+        (click)="onEditGame(i)">
+        </div>
+      </div>
+<!--##########################################################################################################################################-->
+
+    <!--<div class="list-group-item" id="oneGameContainer" *ngFor="let game of games; let i = index">
+      <div (click)="onViewGame(i)" class="rounded float-left" style="width: 90%">
+        
+        <h5 style="width: 80%;height: 48px; overflow:hidden; text-overflow: ellipsis;white-space: nowrap">
           {{ game.title }}
-          <img *ngIf="game.photo" [src]="game.photo" class="img-thumbnail" alt="Responsive image" />
-          <button class="btn btn-default pull-right" (click)="onDeleteGame(game)">
-            <span class="glyphicon glyphicon-minus"></span>
-          </button>
-        </h3>
-       <!-- <p class="list-group-item-text">{{ game.categorie }}</p>-->
-      </button>
-    </div>
-    <button class="btn btn-primary" (click)="onNewGame()">Nouveau Jeux</button>
+        </h5>
+        
+        <div class="rounded float-left" id="infoGame">
+        <table >
+          <tr >
+            <td>
+              <img src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2FStormtrooper%20-%2001%20(1).png?alt=media&token=852a402b-29b8-4a6c-9be6-4c955b938b66">
+            </td>
+            <td >
+              <h6 style="text-align: left;">  :   {{game.nbJoueursMin}} à {{game.nbJoueursMax}}</h6>
+            </td>
+          </tr>
+          <tr >
+            <td >
+              <img src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fclock_icon-icons.com_64800.png?alt=media&token=3b0cbcd4-7f0b-4f02-9aca-fed7e7921516">
+            </td>
+            <td >
+              <h6 style="text-align: left;">  :   {{game.tpsJeux}} min</h6>
+            </td>
+          </tr>
+        </table>
+      </div>
+        <div id="pictureOfList" class="rounded float-right">
+          <img *ngIf="game.photo" [src]="game.photo" alt="Responsive image" />
+        </div>
+        
+      </div>
+      <div class="rounded float-right" style="width: 10%;cursor: pointer;">
+        <img src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fcroix%20laser.png?alt=media&token=0cfd57ce-3b00-4a52-a8c5-f0d5256114e5"
+          id="icones" (click)="onDeleteGame(game)">
+      </div>
+      <div id="pictureOfList" class="rounded float-right" >
+      <img src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fedit.png?alt=media&token=4f4dae2a-b68a-4046-aa40-cc28a2dd5206"
+       style="cursor: pointer;" (click)="onEditGame(i)">
+      </div>
+    </div>-->
   </div>
+  <button class="btn btn-primary" style="margin-top: 2%;" (click)="onNewGame()">Nouveau Jeux</button>
+  
+
 </div>

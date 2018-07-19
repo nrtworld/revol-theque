@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Pipe, PipeTransform } from '@angular/core';
 import * as firebase from 'firebase';
 
 @Component({
@@ -21,3 +21,5 @@ export class AppComponent {
     firebase.initializeApp(config);
   }
 }
+
+

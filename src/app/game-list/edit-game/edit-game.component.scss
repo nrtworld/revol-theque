@@ -1,14 +1,8 @@
-// fichier scss
 
-#flex-container-categories{
-    width: 100%;
-    display: flex; 
-    flex-direction: row; 
-    flex-wrap: wrap
-}
+#presentationLeft{
+    max-width: 60%;
 
-#BB8{
-    width: 20%;
+    text-align: justify;
 }
 
 @-webkit-keyframes masuperanimation { /* Safari, Opera, Chrome */
@@ -32,9 +26,19 @@
     }
 }
 
-
 #retour:hover
 {
     -webkit-animation: masuperanimation 1s; /* Safari, Opera, Chrome */
     animation: masuperanimation 1s; /* Tous les autres navigateurs */
+}
+
+#flex-container-categories{
+    width: 100%;
+    display: flex; 
+    flex-direction: row; 
+    flex-wrap: wrap
+}
+
+#BB8{
+    width: 20%;
 }

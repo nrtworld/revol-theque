@@ -1,14 +1,66 @@
 // fichier scss
 
+h3{
+    margin-top: 5%;
+}
+
 #smallViewPicture{
-    width: auto;
-    height: 30%;
+    width: 30%;
+    height: auto;
     vertical-align: middle;
 
 }
 #presentationLeft{
-    max-width: 60%;
+    max-width: 69%;
 
     text-align: justify;
 }
 
+@-webkit-keyframes masuperanimation { /* Safari, Opera, Chrome */
+    0% {
+        transform: translateX(0px);
+    }
+
+    100% {
+        transform: translateX(-300px);
+    }
+
+}
+
+@keyframes masuperanimation { /* Tous les autres navigateurs */
+    0% {
+        transform: translateX(0px);
+    }
+
+    100% {
+        transform: translateX(-300px);
+    }
+}
+
+
+#retour:hover
+{
+    -webkit-animation: masuperanimation 1s; /* Safari, Opera, Chrome */
+    animation: masuperanimation 1s; /* Tous les autres navigateurs */
+}
+
+#flex-container-categories{
+    width: 100%;
+    height: 50px;
+    display: flex; 
+    flex-direction: row; 
+    flex-wrap: wrap
+}
+
+#flex-container-titre{
+    width: 100%;
+    display: flex; 
+    flex-direction: row; 
+    flex-wrap: nowrap
+    
+}
+
+#categories{
+    margin-left: 10px;
+    cursor: default;
+}

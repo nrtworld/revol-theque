@@ -3,9 +3,9 @@ export class Game{
     photo: string;
     nbJoueursMin: number;
     nbJoueursMax: number;
-    tpsJeux: string;
+    tpsJeux: number;
     synopsis: string;
-    categorie: string[];
+    categories: string[];
 
     constructor(){
         

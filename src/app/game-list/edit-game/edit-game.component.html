@@ -4,69 +4,56 @@
     </div>
 <div class="row" style="margin-top: 2%;">
     <div class="col-sm-8 col-sm-offset-2">
-      <h2>Enregistrer un nouveau Jeu</h2>
+      <h2>Modifier {{game.title}}</h2>
       <form [formGroup]="gameForm" (ngSubmit)="onSaveGame()">
         <div class="form-group">
           <label for="title">Titre</label>
-          <input type="text" id="title"
+          <input type="text" id="title" [value]="game.title"
                  class="form-control" formControlName="title">
         </div>
-        <div class="form-group">
-            <h4>Ajouter une photo</h4>
-            <input type="file" (change)="detectFiles($event)"
-                   class="form-control" accept="image/*">
-            <div *ngIf="fileIsUploading" class="progress">
-               <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
-            </div>
-            <p class="text-success" *ngIf="fileUploaded">Fichier chargé !</p>
-        </div>
-        <!--<div class="form-group">
-            <label for="categories">Catégories</label>
-            <select formControlName="categories" class="form-control" multiple >
-                <option *ngFor="let cat of categories">{{cat}}</option>
-              </select>
-            
-          </div>-->
-          <!--#############################################################################################################################################-->
-          <div class="form-group" >
-              <label for="categories2">Catégories</label>
-              <span id="flex-container-categories" >
-              <select class="form-control" multiple style="background-color:lightgrey;width: 40%;">
-                  <option *ngFor="let cat of categories" (click)="selectCategorie(cat)">{{cat}}</option>
-                </select>
-                <div id="BB8">
-                  <img style="width: 100%;margin-top: 15%;" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fdroid_run.gif?alt=media&token=88fd459d-3baa-4699-b4f5-75d53f4a1d09">
-                </div>
-              <select class="form-control" multiple style="color: rgb(8, 124, 23);width: 40%;" id="Catégorie2">
-                  <option *ngFor="let cat of categories2" (click)="deSelectCategorie(cat)">{{cat}}</option>
-              </select>
-            </span>
-            </div>
-
+        
           <!--#############################################################################################################################################-->
           <div class="form-group">
+            <label for="categories2">Catégories</label>
+            <span id="flex-container-categories">
+              <select class="form-control" multiple style="background-color:lightgrey;width: 40%;">
+                <option *ngFor="let cat of categories" (click)="selectCategorie(cat)">{{cat}}</option>
+              </select>
+              <div id="BB8">
+                <img style="width: 100%;margin-top: 15%;" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fdroid_run.gif?alt=media&token=88fd459d-3baa-4699-b4f5-75d53f4a1d09">
+              </div>
+              <select class="form-control" multiple style="color: rgb(8, 124, 23);width: 40%;" id="Catégorie2">
+                <option *ngFor="let cat of categories2" (click)="deSelectCategorie(cat)">{{cat}}</option>
+              </select>
+            </span>
+          </div>
+
+          <!--#############################################################################################################################################-->
+          
+
+          <div class="form-group">
               <label for="nbJoueursMin">Nombre de Joueur minimum</label>
-              <input type="text" id="nbJoueursMin"
+              <input type="text" id="nbJoueursMin" [value]="game.nbJoueursMin"
                      class="form-control" formControlName="nbJoueursMin">
             </div>
             <div class="form-group">
                 <label for="nbJoueursMax">Nombre de Joueur Maximum</label>
-                <input type="text" id="nbJoueursMax"
+                <input type="text" id="nbJoueursMax" [value]="game.nbJoueursMax"
                        class="form-control" formControlName="nbJoueursMax">
               </div>
             <div class="form-group">
                 <label for="tpsJeux">Temps de jeux</label>
-                <input type="text" id="tpsJeux"
+                <input type="text" id="tpsJeux" [value]="game.tpsJeux"
                        class="form-control" formControlName="tpsJeux">
               </div>
         <div class="form-group">
           <label for="synopsis">Synopsis</label>
-          <textarea id="synopsis"
+          <textarea id="synopsis" [value]="game.synopsis" style="height: 150px;"
                     class="form-control" formControlName="synopsis">
           </textarea>
         </div>
         
-        <button class="btn btn-success" [disabled]="gameForm.invalid || fileIsUploading"
+        <button class="btn btn-success" [disabled]="gameForm.invalid"
                 type="submit">Enregistrer
         </button>
       

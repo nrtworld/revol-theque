@@ -1,2 +1,80 @@
 // fichier scss
 
+#pictureOfList img{
+    width: 100%;
+    height: auto;
+    margin-right: 5%;
+    
+}
+
+#pictureOfList{
+    width: 30%;
+    max-width: 200px;
+    margin-top: 15%;
+}
+
+#icones{
+    width: 50px;
+}
+
+#infoGame{
+    width: 286px; 
+    margin-top: 10%;
+    display: flex; 
+    flex-direction: row; 
+    flex-wrap: wrap
+}
+
+#flex-container{
+    width: 100%;
+    display: flex; 
+    flex-direction: row; 
+    flex-wrap: wrap
+}
+
+#oneGameContainer{
+    max-width: 345px; 
+    min-width: 225px;
+}
+
+#onTop{
+    position: fixed;
+    z-index: 100;
+    right: 10px;
+    top: 100px;
+    width: 100px;
+    height: 100px;
+}
+
+#goOnTop{
+    width: 100%;
+    height: 100%;
+}
+
+@-webkit-keyframes xWingOnTop { /* Safari, Opera, Chrome */
+    0% {
+        transform: translatey(0px);
+    }
+
+    100% {
+        transform: translatey(-300px);
+    }
+
+}
+
+@keyframes xWingOnTop { /* Tous les autres navigateurs */
+    0% {
+        transform: translatey(0px);
+    }
+
+    100% {
+        transform: translatey(-300px);
+    }
+}
+
+
+#goOnTop:hover
+{
+    -webkit-animation: xWingOnTop 1s; /* Safari, Opera, Chrome */
+    animation: xWingOnTop 1s; /* Tous les autres navigateurs */
+}
