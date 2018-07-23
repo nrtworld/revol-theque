@@ -4,6 +4,7 @@ import * as firebase from 'firebase';
 import { Subject } from '../../../node_modules/rxjs';
 import { stripGeneratedFileSuffix } from '@angular/compiler/src/aot/util';
 import { UUID } from 'angular2-uuid';
+import { FiltreGame } from '../models/filtreGame.model';
 @Injectable()
 export class GamesService {
 
@@ -40,7 +41,7 @@ export class GamesService {
     this.emitGames();
   }
 
-  private deletePhotoInStorage(url: string) {
+  public deletePhotoInStorage(url: string) {
     const storageRef = firebase.storage().refFromURL(url);
     storageRef.delete().then(() => {
       console.log('photo supprimée');
@@ -126,21 +127,74 @@ export class GamesService {
   private stringSort(a: Game, b: Game) {
     const titreA = a.title.toLowerCase();
     const titreB = b.title.toLowerCase();
-    let i: number = 0;
+    var i: number = 0;
     while ((i < a.title.length) && (i < titreB.length)) {
-      if (titreA[i] < titreB[i]){
+      if (titreA[i] < titreB[i]) {
         return -1;
       }
-      else if (titreA[i] > titreB[i]){
+      else if (titreA[i] > titreB[i]) {
         return 1;
       }
-      if (titreA.length < titreB.length){
-        return -1;
-      }
-      else{
-        return 1;
-      }
-     ++i;
+      ++i;
     }
+    if (titreA === titreB) {
+      return 0;
+    } else if (titreA === '') {
+      return -1;
+    }
+    return 1;
   }
+
+    searchGame(filter : FiltreGame){
+      console.log('Début methode de searchGame');
+      var gamesResult: Game[] = [];
+
+      for(let game of this.games){
+        var titleIsOK: boolean = true;
+        var nbJoueursIsOK: boolean = true;
+        var tpsJeuxIsOK: boolean = true;
+
+        const title: string = filter.title;
+        const nbJoueurs = filter.nbJoueurs?new Number(filter.nbJoueurs): null;
+        const tpsJeuxMin = filter.tpsJeuxMin? new Number(filter.tpsJeuxMin): null;
+        const tpsJeuxMax = filter.tpsJeuxMax?new Number(filter.tpsJeuxMax): null;
+
+        const game_nbJoueursMin = new Number(game.nbJoueursMin);
+        const game_nbJoueursMax = new Number(game.nbJoueursMax);
+        const game_tpsJeux = new Number(game.tpsJeux);
+
+
+        if(title){
+          if(game.title.toLowerCase().includes(title.toLowerCase())){
+            titleIsOK = true;
+          }else{ 
+            titleIsOK = false;
+          }
+        }
+        if(nbJoueurs && titleIsOK){
+          if((nbJoueurs >= game_nbJoueursMin) && (nbJoueurs <= game_nbJoueursMax)){
+            nbJoueursIsOK = true;
+          }else{
+            nbJoueursIsOK = false;
+          }
+        }
+
+        if(tpsJeuxMin && tpsJeuxMax && nbJoueursIsOK && titleIsOK){
+          if(game_tpsJeux >= tpsJeuxMin && game_tpsJeux <=tpsJeuxMax){
+            tpsJeuxIsOK = true;
+          }else{
+            tpsJeuxIsOK = false;
+          }
+        }
+
+        if(titleIsOK && nbJoueursIsOK && tpsJeuxIsOK){
+          gamesResult.push(game);
+        }
+      }
+
+      console.log(gamesResult.length);
+      return gamesResult;
+
+    }
+  
 }

@@ -13,6 +13,8 @@ import { Location } from '@angular/common';
 })
 export class EditGameComponent implements OnInit {
   game: Game;
+  photo:string;
+  oldPhoto: string;
 
   gameForm: FormGroup;
   categories = this.enumToArray(GamesCategories);
@@ -33,6 +35,8 @@ export class EditGameComponent implements OnInit {
     this.gameService.getSingleGames(+id).then(
       (game: Game)=>{
         this.game = game;
+        this.photo = game.photo;
+        this.oldPhoto = game.photo;
         this.categories2 = this.game.categories;
         for(let cat of this.categories2){
           this.categories.splice(this.categories.indexOf(cat),1);
@@ -69,7 +73,8 @@ export class EditGameComponent implements OnInit {
     newGame.nbJoueursMax = nbJoueursMax? nbJoueursMax : this.game.nbJoueursMax;
     newGame.synopsis = synopsis? synopsis : this.game.synopsis;
     newGame.tpsJeux = tpsJeux? tpsJeux : this.game.tpsJeux;
-     newGame.photo = this.game.photo;
+     newGame.photo = this.photo;
+     this.gameService.deletePhotoInStorage(this.oldPhoto);
     
 console.log('photo : '+ newGame.photo);
 const id = this.route.snapshot.params['id'];
@@ -78,6 +83,9 @@ const id = this.route.snapshot.params['id'];
   }
 
   onBack(){
+    if(this.oldPhoto!==this.photo){
+      this.gameService.deletePhotoInStorage(this.photo);
+    }
     this.location.back();
   }
 
@@ -99,4 +107,22 @@ const id = this.route.snapshot.params['id'];
        const keys = Object.keys(data);
        return keys.slice(keys.length / 2);
    }
+
+   onUploadFile(file: File){
+    this.fileIsUploading = true;
+    this.gameService.uploadFile(file).then(
+      (url: string)=>{
+        console.log('URL onUploadFile = '+url);
+        this.fileUrl = url;
+        this.fileIsUploading = false;
+        this.fileUploaded = true;
+        this.photo = url;
+      }
+    );
+  }
+
+  detectFiles(event){
+    console.log('event : ' + event.target.files[0]);
+    this.onUploadFile(event.target.files[0]);
+  }
 }

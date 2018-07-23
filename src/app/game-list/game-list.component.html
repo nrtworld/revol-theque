@@ -7,9 +7,14 @@
 </div>
 </a>
 <div class="row">
-  <button class="btn btn-primary" style="margin-top: 2%;" (click)="onNewGame()">Nouveau Jeu</button>
+  <button class="btn btn-primary" style="margin-top: 2%; margin-bottom: 5px;" (click)="onNewGame()">Nouveau Jeu</button>
+  <div style="width: 100%;">
+  <app-search></app-search>
+  </div>
   <h2 style="width: 100%;">Vos Jeux</h2>
   <div class="list-group" id="flex-container">
+
+
 
     <!--##########################################################################################################################################-->
     <div class="card" style="max-width: 286px;" id="oneGameContainer" *ngFor="let game of games; let i = index">

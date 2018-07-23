@@ -14,6 +14,7 @@ import { GamesService } from './services/games.service';
 import { HttpClientModule } from '@angular/common/http';
 import {Routes, RouterModule} from '@angular/router';
 import { EditGameComponent } from './game-list/edit-game/edit-game.component';
+import { SearchComponent } from './game-list/search/search.component';
 
 const appRoutes: Routes = [
   { path: 'auth/signup', component: SignupComponent },
@@ -36,7 +37,8 @@ const appRoutes: Routes = [
     GameFormComponent,
     HeaderComponent,
     EditGameComponent,
-    EnumToArrayPipe
+    EnumToArrayPipe,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
