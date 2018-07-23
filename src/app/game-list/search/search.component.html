@@ -23,7 +23,19 @@
           <input type="text" id="tpsJeuxMax" class="form-control" formControlName="tpsJeuxMax">
         </div>
       </div>
-      <div id="boutons" class="rounded float-left">
+
+      <div class="form-group">
+        <label for="categories2">Catégories</label>
+          <div class="categories" >
+            <button *ngFor="let cat of categories" 
+            [ngClass]="(isCatSelected(cat))?'btn btn-success':'btn btn-dark'" style="margin-left: 1%;margin-top: 1%;width: 122px;"
+            type="button" id="categories2" (click)="selectCategorie(cat)">{{ cat }}</button>
+          </div>
+      
+      </div>
+
+
+      <div class="rounded float-left boutons">
         <button class="btn btn-success" type="submit" id="btn">Filter
         </button>
         <button class="btn btn-warning" id="btn" type="button" (click)="onReinitSearch()">Réinitialiser la recherche

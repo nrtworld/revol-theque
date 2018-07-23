@@ -30,11 +30,20 @@
 
 
 
-#boutons{
+.boutons{
     display: flex; 
     flex-direction: row; 
     flex-wrap: nowrap;
     width: 18%;
+    align-self: flex-start;
+   
+}
+
+.categories{
+    display: flex; 
+    flex-direction: row; 
+    flex-wrap: wrap;
+    width: 100%;
     align-self: flex-start;
    
 }

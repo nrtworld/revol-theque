@@ -153,11 +153,13 @@ export class GamesService {
         var titleIsOK: boolean = true;
         var nbJoueursIsOK: boolean = true;
         var tpsJeuxIsOK: boolean = true;
+        var categoriesIsOK: boolean = true;
 
         const title: string = filter.title;
         const nbJoueurs = filter.nbJoueurs?new Number(filter.nbJoueurs): null;
         const tpsJeuxMin = filter.tpsJeuxMin? new Number(filter.tpsJeuxMin): null;
         const tpsJeuxMax = filter.tpsJeuxMax?new Number(filter.tpsJeuxMax): null;
+        const categories: string[] = filter.categories;
 
         const game_nbJoueursMin = new Number(game.nbJoueursMin);
         const game_nbJoueursMax = new Number(game.nbJoueursMax);
@@ -187,7 +189,16 @@ export class GamesService {
           }
         }
 
-        if(titleIsOK && nbJoueursIsOK && tpsJeuxIsOK){
+        if(categories &&tpsJeuxIsOK && nbJoueursIsOK && titleIsOK){
+          for(let cat of categories){
+            if(!game.categories.includes(cat)){
+              categoriesIsOK = false;
+              break;
+            }
+          }
+        }
+
+        if(titleIsOK && nbJoueursIsOK && tpsJeuxIsOK && categoriesIsOK){
           gamesResult.push(game);
         }
       }

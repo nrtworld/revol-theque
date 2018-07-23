@@ -1,21 +1,24 @@
-import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
+import { Component, OnInit, Pipe, PipeTransform, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GamesService } from '../../services/games.service';
 import { Router } from '@angular/router';
 import { Game } from '../../models/game.model';
 import { GamesCategories } from '../../models/gamesCategorie.enum';
 import { Location } from '@angular/common';
+import { CategoriesGamesService } from '../../services/categoriesGames.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-game-form',
   templateUrl: './game-form.component.html',
   styleUrls: ['./game-form.component.scss']
 })
-export class GameFormComponent implements OnInit {
+export class GameFormComponent implements OnInit, OnDestroy {
 
   gameForm: FormGroup;
-  categories : string[]= this.enumToArray(GamesCategories).sort();
+  categories : string[]= [];
   categories2: string[] = [];
+  categoriesGamesSubscription = new Subscription;
   fileIsUploading = false;
   fileUrl: string;
   fileUploaded = false;
@@ -23,9 +26,16 @@ export class GameFormComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, 
     private gameService: GamesService,
      private router: Router,
-    private location: Location) { }
+    private location: Location,
+  private categoriesGamesService: CategoriesGamesService) { }
 
   ngOnInit() {
+    this.categoriesGamesSubscription = this.categoriesGamesService.categoriesGamesSubject.subscribe(
+      (categories: string[])=>{
+        this.categories = categories;
+      }
+    );
+    this.categoriesGamesService.emitCategoriesGames();
     this.initForm();
   }
 
@@ -99,6 +109,10 @@ export class GameFormComponent implements OnInit {
   enumToArray(data: Object){
       const keys = Object.keys(data);
       return keys.slice(keys.length / 2);
+  }
+
+  ngOnDestroy(){
+    this.categoriesGamesSubscription.unsubscribe();
   }
 
 }

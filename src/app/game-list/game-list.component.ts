@@ -20,7 +20,7 @@ export class GameListComponent implements OnInit, OnDestroy {
     //this.gameService.getGames();
     this.gamesSubscription = this.gameService.gamesSubject.subscribe(
       (games: Game[])=>{
-        this.games = games;
+        this.games = games; 
       }
     );
     this.gameService.emitGames();
@@ -42,11 +42,13 @@ export class GameListComponent implements OnInit, OnDestroy {
     }
   }
 
-  onViewGame(id: number){
+  onViewGame(game: Game){
+    const id = this.gameService.games.indexOf(game);
     this.router.navigate(['/games','view', id]);
   }
 
-  onEditGame(id: number){
+  onEditGame(game: Game){
+    const id = this.gameService.games.indexOf(game);
     this.router.navigate(['/games','edit',id]);
   }
 

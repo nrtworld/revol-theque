@@ -1,4 +1,7 @@
+import { UUID } from "angular2-uuid";
+
 export class Game{
+    id: string;
     title: string;
     photo: string;
     nbJoueursMin: number;
@@ -8,6 +11,6 @@ export class Game{
     categories: string[];
 
     constructor(){
-        
+        this.id = UUID.UUID();
     }
 }

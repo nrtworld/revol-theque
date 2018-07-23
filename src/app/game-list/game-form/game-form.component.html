@@ -26,6 +26,7 @@
               <span id="flex-container-categories" >
               <select class="form-control" multiple style="background-color:lightgrey;width: 40%;">
                   <option *ngFor="let cat of categories" (click)="selectCategorie(cat)">{{cat}}</option>
+                  <option (click)="console.log('pouet');"> + une catégorie</option>
                 </select>
                 <div id="BB8">
                   <img style="width: 100%;margin-top: 15%;" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fdroid_run.gif?alt=media&token=88fd459d-3baa-4699-b4f5-75d53f4a1d09">

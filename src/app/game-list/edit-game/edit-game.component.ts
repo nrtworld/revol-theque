@@ -1,24 +1,27 @@
-import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
+import { Component, OnInit, Pipe, PipeTransform, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GamesService } from '../../services/games.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Game } from '../../models/game.model';
 import { GamesCategories } from '../../models/gamesCategorie.enum';
 import { Location } from '@angular/common';
+import { Subscription } from 'rxjs';
+import { CategoriesGamesService } from '../../services/categoriesGames.service';
 
 @Component({
   selector: 'app-edit-game',
   templateUrl: './edit-game.component.html',
   styleUrls: ['./edit-game.component.scss']
 })
-export class EditGameComponent implements OnInit {
+export class EditGameComponent implements OnInit, OnDestroy {
   game: Game;
   photo:string;
   oldPhoto: string;
 
   gameForm: FormGroup;
-  categories = this.enumToArray(GamesCategories);
+  categories: string[] = [];
   categories2: string[] = [];
+  categoriesGamesSubscription = new Subscription;
   fileIsUploading = false;
   fileUrl: string;
   fileUploaded = false;
@@ -27,9 +30,17 @@ export class EditGameComponent implements OnInit {
     private route: ActivatedRoute,
      private gameService: GamesService, 
      private router: Router,
-     private location: Location) { }
+     private location: Location,
+    private categoriesGamesService: CategoriesGamesService) { }
 
   ngOnInit() {
+    this.categoriesGamesSubscription = this.categoriesGamesService.categoriesGamesSubject.subscribe(
+      (categories: string[])=>{
+        this.categories = categories;
+      }
+    );
+    this.categoriesGamesService.emitCategoriesGames();
+
     this.game = new Game();
     const id = this.route.snapshot.params['id'];
     this.gameService.getSingleGames(+id).then(
@@ -124,5 +135,9 @@ const id = this.route.snapshot.params['id'];
   detectFiles(event){
     console.log('event : ' + event.target.files[0]);
     this.onUploadFile(event.target.files[0]);
+  }
+
+  ngOnDestroy(){
+    this.categoriesGamesSubscription.unsubscribe();
   }
 }

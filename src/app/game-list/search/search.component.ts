@@ -47,7 +47,7 @@ export class SearchComponent implements OnInit {
     const tpsJeuxMin: number=  this.gameForm.get('tpsJeuxMin').value;
     const tpsJeuxMax: number = this.gameForm.get('tpsJeuxMax').value;
 
-    if(!title && !nbJoueurs && !tpsJeuxMin && !tpsJeuxMax){
+    if(!title && !nbJoueurs && !tpsJeuxMin && !tpsJeuxMax && !this.categories2){
       return null;
     }
      var filter: FiltreGame = new FiltreGame();
@@ -55,6 +55,7 @@ export class SearchComponent implements OnInit {
     filter.nbJoueurs = nbJoueurs;
     filter.tpsJeuxMin = tpsJeuxMin;
     filter.tpsJeuxMax = tpsJeuxMax;
+    filter.categories = this.categories2;
 
 
     this.games = this.gameService.searchGame(filter);
@@ -70,6 +71,7 @@ export class SearchComponent implements OnInit {
 
 onReinitSearch(){
   this.gameForm.reset();
+  this.categories2 = [];
   this.gameListComponent.games = this.gameService.games;
 
 }
@@ -77,4 +79,28 @@ onReinitSearch(){
 onFilterWindow(){
   this.filterOn = !this.filterOn;
 }
+
+selectCategorie(cat: string){
+  if(this.isCatSelected(cat)){
+    this.deSelectOneCategorie(cat);
+  }else{
+    this.selectOneCategorie(cat);
+  }
+}
+
+selectOneCategorie(cat: string){
+  this.categories2.push(cat);
+  console.log(this.categories2.includes(cat,0));
+ }
+
+ deSelectOneCategorie(cat: string){
+   const index: number = this.categories2.indexOf(cat);
+   this.categories2.splice(index,1);
+  }
+
+  isCatSelected(cat){
+   
+    return this.categories2.includes(cat,0);
+  }
+
 }

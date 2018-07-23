@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import {Routes, RouterModule} from '@angular/router';
 import { EditGameComponent } from './game-list/edit-game/edit-game.component';
 import { SearchComponent } from './game-list/search/search.component';
+import { CategoriesGamesService } from './services/categoriesGames.service';
 
 const appRoutes: Routes = [
   { path: 'auth/signup', component: SignupComponent },
@@ -47,7 +48,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [AuthGuardService,AuthService,GamesService],
+  providers: [AuthGuardService,AuthService,GamesService,CategoriesGamesService],
   bootstrap: [AppComponent]
 })
 

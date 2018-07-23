@@ -18,13 +18,14 @@
 
     <!--##########################################################################################################################################-->
     <div class="card" style="max-width: 286px;" id="oneGameContainer" *ngFor="let game of games; let i = index">
-      <div style="margin-bottom: 100px;" (click)="onViewGame(i)">
+      <div style="margin-bottom: 100px;" (click)="onViewGame(game)">
         <div style="width: 286px;height: 286px">
       <img class="card-img-top" *ngIf="game.photo" [src]="game.photo" alt="Responsive image" style="max-width: 286px;max-height: 286px;" />
           </div>
           <h5 class="card-title" style="overflow:hidden; text-overflow: ellipsis;white-space: nowrap;margin-top: 2%">
             {{ game.title }}
           </h5>
+          
           
           <div  id="infoGame">
           
@@ -44,12 +45,13 @@
           
           <!-- <p class="list-group-item-text">{{ game.categorie }}</p>-->
         </div>
+        
         <div style="position: absolute; bottom: 0px;" >
           <img style="width: 20%;cursor: pointer;" class="rounded float-right" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fcroix%20laser.png?alt=media&token=0cfd57ce-3b00-4a52-a8c5-f0d5256114e5"
             id="icones" (click)="onDeleteGame(game)">
        
         <img style="width: 30%;cursor: pointer;" class="rounded float-left" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fedit.png?alt=media&token=4f4dae2a-b68a-4046-aa40-cc28a2dd5206"
-        (click)="onEditGame(i)">
+        (click)="onEditGame(game)">
         </div>
       </div>
 <!--##########################################################################################################################################-->
