@@ -1,5 +1,6 @@
-import { Component, Pipe, PipeTransform } from '@angular/core';
+import { Component, Pipe, PipeTransform, OnInit, OnDestroy } from '@angular/core';
 import * as firebase from 'firebase';
+import { FilterGamesService } from './services/filterGames.service';
 
 @Component({
   selector: 'app-root',
@@ -18,8 +19,10 @@ export class AppComponent {
       storageBucket: "revol-theque.appspot.com",
       messagingSenderId: "661949876520"
     };
-    firebase.initializeApp(config);
+    firebase.initializeApp(config).auth().signOut();
   }
+
+
 }
 
 

@@ -11,6 +11,7 @@ export class GamesService {
   games: Game[] = [];
   gamesSubject = new Subject<Game[]>();
 
+
   constructor() {
     this.getGames();
    }
@@ -148,7 +149,7 @@ export class GamesService {
     searchGame(filter : FiltreGame){
       console.log('Début methode de searchGame');
       var gamesResult: Game[] = [];
-
+if(filter){
       for(let game of this.games){
         var titleIsOK: boolean = true;
         var nbJoueursIsOK: boolean = true;
@@ -202,6 +203,9 @@ export class GamesService {
           gamesResult.push(game);
         }
       }
+    }else{
+      gamesResult = this.games;
+    }
 
       console.log(gamesResult.length);
       return gamesResult;

@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { ConfirmPassword } from '../../validators/confirmPassword.validator';
+import { FilterGamesService } from '../../services/filterGames.service';
 
 @Component({
   selector: 'app-signup',
@@ -16,7 +17,8 @@ export class SignupComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
-              private router: Router) { }
+              private router: Router,
+            private filterGamesService: FilterGamesService) { }
 
   ngOnInit() {
     this.initForm();

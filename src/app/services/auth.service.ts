@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import * as firebase from 'firebase';
 import { resolve } from 'url';
 import { reject } from 'q';
+import { FilterGamesService } from './filterGames.service';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +40,8 @@ static isAuth: boolean = false;
         )
       }
     );
+ 
+    
   }
 
   signOutuser(){
