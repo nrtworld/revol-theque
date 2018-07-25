@@ -2,7 +2,7 @@
 <div id="hautdepage"></div> 
 <a href="games#hautdepage" >
 <div id="onTop">
-  <img src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fx-wing.png?alt=media&token=50d138cb-5721-4030-818d-ab725ca2b215"
+  <img src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fx-wing_yellow.png?alt=media&token=05c01a40-00cb-4033-a67f-465d34634c71"
   id="goOnTop">
 </div>
 </a>
@@ -11,16 +11,16 @@
   <div style="width: 100%;">
   <app-search></app-search>
   </div>
-  <h2 style="width: 100%;">Vos Jeux</h2>
+  <h2 style="width: 100%; margin: auto;">Vos Jeux</h2>
   <div class="list-group" id="flex-container">
 
 
 
     <!--##########################################################################################################################################-->
-    <div class="card" style="max-width: 286px;" id="oneGameContainer" *ngFor="let game of games; let i = index">
+    <div class="card" style="max-width: 286px;border-radius: 20px;margin-top: 1%;background-color: rgba(255, 255, 255, 0.3);" id="oneGameContainer" *ngFor="let game of games; let i = index">
       <div style="margin-bottom: 100px;" (click)="onViewGame(game)">
-        <div style="width: 286px;height: 286px">
-      <img class="card-img-top" *ngIf="game.photo" [src]="game.photo" alt="Responsive image" style="max-width: 286px;max-height: 286px;" />
+        <div style="height: 286px;border-radius: 20px;">
+      <img class="card-img-top" *ngIf="game.photo" [src]="game.photo" style="max-width: 286px;max-height: 286px;border-radius: 20px;" />
           </div>
           <h5 class="card-title" style="overflow:hidden; text-overflow: ellipsis;white-space: nowrap;margin-top: 2%">
             {{ game.title }}

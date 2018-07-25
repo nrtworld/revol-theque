@@ -2,28 +2,34 @@
   <div class="col-xs-12">
     <div style="width: 100%; text-align: left; margin-top: 2%;">
       <div (click)="onBack()">
-        <img id="retour" style="width: 100px; height: 50px;" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Ffaucon%20millenium.png?alt=media&token=41ad1a84-20f1-4c50-af7e-41670439e62a"
+        <img id="retour" style="width: 100px; height: 50px;" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Ffaucon%20millenium_yellow.png?alt=media&token=9a508bc1-27d1-4f4c-81b8-aeedbdf4c5cd"
           data-toggle="tooltip" data-placement="right" title="Retour">
-          <img style="height: 70px;cursor: pointer;" class="rounded float-right" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fedit.png?alt=media&token=4f4dae2a-b68a-4046-aa40-cc28a2dd5206"
-        (click)="onEditGame()">
+        <img style="height: 70px;cursor: pointer;" class="rounded float-right" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fedit_yellow.png?alt=media&token=fd81598a-aaa6-4426-b78f-fe3ed6b6d6c1"
+          (click)="onEditGame()">
       </div>
     </div>
     <div style="margin-top: 2%;">
       <div id="presentationLeft" class="rounded float-left">
-        
-          <h1>{{ game.title }}</h1>
-          
+
+        <h1>{{ game.title }}</h1>
+
         <!--<h3>Catégorie : {{ game.categorie }}</h3>-->
         <h3>Nombre de joueurs : {{ game.nbJoueursMin }} à {{ game.nbJoueursMax }}</h3>
         <h3>Temps de jeux : {{ game.tpsJeux }} min</h3>
-        <div id="flex-container-categories">
-          <h3 style="margin-top: 0px;">Catégories :  </h3>
-          <div *ngFor="let cat of game.categories">
-          <button id="categories" class="btn btn-success" >{{cat}}</button>
-        </div>
-      </div>
-        <div class="jumbotron">
-          <h5>{{ game.synopsis }}</h5>
+        <div class="flex-container">
+          <h3 style="margin-top: 0px;">Catégories : </h3>
+          <div id="flex-container-categories">
+            <div  style="max-width: 80%;">
+              <button *ngFor="let cat of game.categories" id="categories" class="btn btn-success">{{cat}}</button>
+            </div>
+          </div>
+          <div style="width: 100%;">
+            <div class="jumbotron" style="background-color: rgba(255, 255, 255, 0.2);max-width: 80%;margin-top: 5%;">
+              <div class="container" style="opacity: 1;">
+                <h5>{{ game.synopsis }}</h5>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

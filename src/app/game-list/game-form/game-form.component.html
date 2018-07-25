@@ -1,9 +1,9 @@
 <div (click)="onBack()" class="rounded float-left">
-    <img id="retour"  style="width: 100px; height: 50px;" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Ffaucon%20millenium.png?alt=media&token=41ad1a84-20f1-4c50-af7e-41670439e62a"
+    <img id="retour"  style="width: 100px; height: 50px;" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Ffaucon%20millenium_yellow.png?alt=media&token=9a508bc1-27d1-4f4c-81b8-aeedbdf4c5cd"
      data-toggle="tooltip" data-placement="right" title="Retour">
     </div>
 <div class="row" style="margin-top: 2%;">
-    <div class="col-sm-8 col-sm-offset-2">
+    <div class="col-sm-8 col-sm-offset-2" style="margin: auto;">
       <h2>Enregistrer un nouveau Jeu</h2>
       <form [formGroup]="gameForm" (ngSubmit)="onSaveGame()">
         <div class="form-group">
@@ -24,15 +24,15 @@
           <div class="form-group" >
               <label for="categories2">Catégories</label>
               <span id="flex-container-categories" >
-              <select class="form-control" multiple style="background-color:lightgrey;width: 40%;">
-                  <option *ngFor="let cat of categories" (click)="selectCategorie(cat)">{{cat}}</option>
-                  <option (click)="addNewCategorieOrNot();"> + une catégorie</option>
+              <select class="form-control" multiple style="width: 40%;background-color: rgba(255, 255, 255, 0.3);">
+                  <option *ngFor="let cat of categories" (click)="selectCategorie(cat)" style="color: black;">{{cat}}</option>
+                  <option style="color: black;" (click)="addNewCategorieOrNot();"> + une catégorie</option>
                 </select>
                 <div id="BB8">
                   <img style="width: 100%;margin-top: 15%;" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fdroid_run.gif?alt=media&token=88fd459d-3baa-4699-b4f5-75d53f4a1d09">
                 </div>
-              <select class="form-control" multiple style="color: rgb(8, 124, 23);width: 40%;" id="Catégorie2">
-                  <option *ngFor="let cat of categories2" (click)="deSelectCategorie(cat)">{{cat}}</option>
+              <select class="form-control" multiple style="width: 40%;background-color: rgba(255, 255, 255, 0.3);" id="Catégorie2">
+                  <option *ngFor="let cat of categories2" (click)="deSelectCategorie(cat)" style="color: rgb(8, 124, 23);">{{cat}}</option>
               </select>
             </span>
             </div>
@@ -63,7 +63,7 @@
               </div>
         <div class="form-group">
           <label for="synopsis">Synopsis</label>
-          <textarea id="synopsis"
+          <textarea id="synopsis" style="background-color: rgba(255, 255, 255, 0.3);color: black;"
                     class="form-control" formControlName="synopsis">
           </textarea>
         </div>

@@ -22,19 +22,21 @@
     margin-top: 10%;
     display: flex; 
     flex-direction: row; 
-    flex-wrap: wrap
+    flex-wrap: wrap;
 }
 
 #flex-container{
     width: 100%;
     display: flex; 
     flex-direction: row; 
-    flex-wrap: wrap
+    flex-wrap: wrap;
+    margin: auto;
 }
 
 #oneGameContainer{
     max-width: 345px; 
     min-width: 225px;
+    margin: auto;
 }
 
 #onTop{
