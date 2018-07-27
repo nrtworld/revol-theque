@@ -16,6 +16,9 @@
       <li routerLinkActive="active" *ngIf="isAuth">
         <a routerLink="auth/signin"  (click)="onSignOut()">Je retourne du côté lumineux</a>
       </li>
+      <li routerLinkActive="active" *ngIf="isAuth">
+          <a routerLink="dataCollector" >Data collector</a>
+        </li>
     </ul>
   </div>
 </nav>

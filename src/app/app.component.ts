@@ -9,7 +9,7 @@ import { FilterGamesService } from './services/filterGames.service';
 })
 export class AppComponent {
   title = 'RevolThèque';
-  classe: string = '';
+
 
   constructor(){
     const config = {
@@ -22,18 +22,8 @@ export class AppComponent {
     };
     //firebase.initializeApp(config).auth().signOut();
     firebase.initializeApp(config);
-  }
 
-  getClass(){
-    return this.classe;
+    
   }
-
-  setClass(classe: string){
-    console.log('setClass : ' + classe);
-    this.classe = classe;
-  }
-
 
 }
-
-

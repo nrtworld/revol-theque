@@ -7,6 +7,8 @@ import { GamesCategories } from '../../models/gamesCategorie.enum';
 import { Location } from '@angular/common';
 import { CategoriesGamesService } from '../../services/categoriesGames.service';
 import { Subscription } from 'rxjs';
+import { Collector } from '../../models/collector.model';
+import { DataCollectorService } from '../../services/dataCollector.service';
 
 @Component({
   selector: 'app-game-form',
@@ -29,7 +31,8 @@ export class GameFormComponent implements OnInit, OnDestroy {
     private gameService: GamesService,
      private router: Router,
     private location: Location,
-  private categoriesGamesService: CategoriesGamesService) { }
+  private categoriesGamesService: CategoriesGamesService,
+private dataCollectorService : DataCollectorService) { }
 
   ngOnInit() {
     this.categoriesGamesSubscription = this.categoriesGamesService.categoriesGamesSubject.subscribe(
@@ -130,6 +133,17 @@ export class GameFormComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(){
     this.categoriesGamesSubscription.unsubscribe();
+  }
+
+  collectInfo(value: string){
+    const title = this.gameForm.get('title').value;
+    console.log(title);
+    const collector: Collector = this.dataCollectorService.initCollect(title);
+   this.gameForm.get('nbJoueursMin').setValue(collector.joueursMin);
+    this.gameForm.get('nbJoueursMax').setValue(collector.joueursMax);
+    this.gameForm.get('tpsJeux').setValue(collector.temps);
+    this.gameForm.get('synopsis').setValue(collector.themes.join(', '));
+
   }
 
 }

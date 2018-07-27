@@ -1,0 +1,36 @@
+<h1>{{title}}</h1>
+
+<h4>{{data}}</h4>
+
+<h4>Mécanismes de jeu :</h4>
+<div *ngFor="let meca of mecanismes">
+  <h5>{{meca}}</h5>
+</div>
+
+<h4>Thème du jeu :</h4>
+<div *ngFor="let theme of themes">
+  <h5>{{theme}}</h5>
+</div>
+
+<h4>Nombre de joueurs :</h4>
+<div >
+  <h5>{{joueurs}}</h5>
+</div>
+
+<h4>Âge pour jouer :</h4>
+<div >
+  <h5>{{age}}</h5>
+</div>
+
+<h4>Temps de jeu :</h4>
+<div >
+  <h5>{{temps}}</h5>
+</div>
+
+
+<div *ngFor="let tab of table;let i = index;" hidden="false">
+  <div *ngIf="i == 1">
+  <h4> table d'index {{i}}</h4>
+  <div >{{tab}}</div>
+</div>
+</div>

@@ -17,6 +17,8 @@ import { EditGameComponent } from './game-list/edit-game/edit-game.component';
 import { SearchComponent } from './game-list/search/search.component';
 import { CategoriesGamesService } from './services/categoriesGames.service';
 import { FilterGamesService } from './services/filterGames.service';
+import { DataCollectorComponent } from './data-collector/data-collector.component';
+import { DataCollectorService } from './services/dataCollector.service';
 
 const appRoutes: Routes = [
   { path: 'auth/signup', component: SignupComponent },
@@ -25,6 +27,7 @@ const appRoutes: Routes = [
   { path: 'games/new', canActivate: [AuthGuardService], component: GameFormComponent },
   { path: 'games/view/:id', canActivate: [AuthGuardService], component: SingleGameComponent },
   { path: 'games/edit/:id', canActivate: [AuthGuardService], component: EditGameComponent },
+  { path: 'dataCollector', canActivate: [AuthGuardService], component: DataCollectorComponent },
   {path: '', redirectTo: 'games', pathMatch: 'full'},
   { path: '**', redirectTo: 'games' }
 ];
@@ -40,7 +43,8 @@ const appRoutes: Routes = [
     HeaderComponent,
     EditGameComponent,
     EnumToArrayPipe,
-    SearchComponent
+    SearchComponent,
+    DataCollectorComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +53,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [AuthGuardService,AuthService,GamesService,CategoriesGamesService,FilterGamesService],
+  providers: [AuthGuardService,AuthService,GamesService,CategoriesGamesService,FilterGamesService,DataCollectorService],
   bootstrap: [AppComponent]
 })
 
