@@ -8,6 +8,8 @@ export class Game{
     nbJoueursMax: number;
     tpsJeux: number;
     synopsis: string;
+    theme: string[];
+    mecanismes: string[];
     categories: string[];
 
     constructor(){

@@ -148,7 +148,7 @@ const id = this.route.snapshot.params['id'];
   onSaveCategorie(){
     const newCategorie = this.categorieForm.get('newCategorie').value;
     if(newCategorie && newCategorie!=='nouvelle catégorie'){
-    this.categoriesGamesService.createNewGame(newCategorie);
+    this.categoriesGamesService.createNewCategorie(newCategorie);
     }
     this.addNewCategorieOrNot();
   }

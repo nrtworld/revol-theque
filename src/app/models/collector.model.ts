@@ -16,31 +16,33 @@ export class Collector {
 
 
     extractJoueurs(joueurs: string) {
-        var tab = joueurs.split(' ');
-        this.joueursMin = Number.parseInt(tab[0]);
-        this.joueursMax = Number.parseInt(tab[2]);
-        console.log('joueur : '+joueurs);
-        console.log('tab0 : '+tab[0]);
-        console.log('tab1 : '+tab[1]);
+        if (joueurs && joueurs.length) {
+            var tab = joueurs.split(' ');
+            this.joueursMin = Number.parseInt(tab[0]);
+            this.joueursMax = Number.parseInt(tab[2]);
+        }
     }
 
     extractAge(age: string) {
-        var tab = age.split(' ');
-        this.age = Number.parseInt(tab[3]);
+        if (age && age.length) {
+            var tab = age.split(' ');
+            this.age = Number.parseInt(tab[3]);
+        }
     }
 
     extractTemps(temps: string) {
-        
-        var tab = temps.split(' ');
-        for (let seq of tab) {
-            console.log('seq : '+seq);
-            if (seq!== null && seq.length && seq.trimLeft[0].match('[0-9]')) {
-                if (tab[seq + 1] == 'min') {
-                    this.temps = Number.parseInt(seq);
-                } else if (tab[seq + 1] == 'h' || tab[seq + 1] == 'H') {
-                    this.temps = Number.parseInt(seq) * 60;
+        if (temps && temps.length) {
+            var tab = temps.split(' ');
+            for (let seq of tab) {
+                if (seq !== null && seq[0].match('[0-9]')) {
+                    var unity = tab.pop();
+                    if (unity == 'min' || unity == 'minutes' || unity == 'Minutes' || unity == 'Min') {
+                        this.temps = Number.parseInt(seq);
+                    } else if (unity == 'heures' ||unity == 'Heures' ||unity == 'h' ||unity == 'H') {
+                        this.temps = Number.parseInt(seq) * 60;
+                    }
+                    break;
                 }
-                break;
             }
         }
     }

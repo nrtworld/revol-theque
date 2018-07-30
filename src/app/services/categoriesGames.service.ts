@@ -22,10 +22,13 @@ export class CategoriesGamesService {
     firebase.database().ref('/categoriesGames').set(this.categoriesGames);
   }
 
-  createNewGame(newCategorie: string) {
+  createNewCategorie(newCategorie: string) {
+    
+      if(!this.categoriesGames.includes(newCategorie)){
     this.categoriesGames.push(newCategorie);
     this.saveCategoriesGames();
     this.emitCategoriesGames();
+      }
   }
 
 
