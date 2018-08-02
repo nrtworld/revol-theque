@@ -7,6 +7,11 @@
   <h5>{{meca}}</h5>
 </div>
 
+<button draggable="true" type="button" class="btn btn-warning" (click)="getImage()">Trouver Image</button>
+
+<div dropzone="copy" id="dropzone" (dragover)="false" (dragend)="false" (drop)="getImageDropped($event)" ></div>
+
+
 <h4>Thème du jeu :</h4>
 <div *ngFor="let theme of themes">
   <h5>{{theme}}</h5>

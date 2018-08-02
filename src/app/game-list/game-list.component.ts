@@ -29,6 +29,8 @@ export class GameListComponent implements OnInit, OnDestroy {
         this.filterGames = filter;
         console.log('filter1 : ' + this.filterGames);
         this.games = this.gameService.searchGame(this.filterGames);
+      }, (error)=>{
+        console.log(error);
       }
     );
     

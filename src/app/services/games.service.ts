@@ -18,7 +18,6 @@ export class GamesService {
 
   emitGames(){
     this.gamesSubject.next(this.games.slice());
-    console.log('service 1 : ' +this.games);
   }
 
   saveGames(){
@@ -100,10 +99,10 @@ export class GamesService {
     return new Promise(
       (resolve,reject)=>{
         const almostUniqueFileName = UUID.UUID();
-        const upload = firebase.storage().ref().child('images/' + almostUniqueFileName + file.name).put(file);
+        const upload = firebase.storage().ref().child('images/' + file.name).put(file);
         upload.on(
           firebase.storage.TaskEvent.STATE_CHANGED,
-          ()=>{
+          (a:Object)=>{
             console.log('Chargement...');
           },
           (error)=>{
@@ -111,7 +110,7 @@ export class GamesService {
             reject;
           },
           ()=>{
-            firebase.storage().ref('images/' + almostUniqueFileName + file.name).getDownloadURL().then(
+            firebase.storage().ref('images/' + file.name).getDownloadURL().then(
               (url2: Object)=>{
                 console.log('downLoadUrl : ' + url2.valueOf() );
                 resolve(url2.valueOf());
@@ -147,16 +146,17 @@ export class GamesService {
   }
 
     searchGame(filter : FiltreGame){
-      console.log('Début methode de searchGame');
       var gamesResult: Game[] = [];
 if(filter){
       for(let game of this.games){
         var titleIsOK: boolean = true;
+        var titleExtentionIsOK: boolean = true;
         var nbJoueursIsOK: boolean = true;
         var tpsJeuxIsOK: boolean = true;
         var categoriesIsOK: boolean = true;
 
         const title: string = filter.title;
+        const titleExtention: string = filter.titleExtention;
         const nbJoueurs = filter.nbJoueurs?new Number(filter.nbJoueurs): null;
         const tpsJeuxMin = filter.tpsJeuxMin? new Number(filter.tpsJeuxMin): null;
         const tpsJeuxMax = filter.tpsJeuxMax?new Number(filter.tpsJeuxMax): null;
@@ -174,7 +174,14 @@ if(filter){
             titleIsOK = false;
           }
         }
-        if(nbJoueurs && titleIsOK){
+        if(titleExtention && titleIsOK){
+          if(game.titleExtention.toLowerCase().includes(titleExtention.toLowerCase())){
+            titleExtentionIsOK = true;
+          }else{ 
+            titleExtentionIsOK = false;
+          }
+        }
+        if(nbJoueurs && titleExtentionIsOK && titleIsOK){
           if((nbJoueurs >= game_nbJoueursMin) && (nbJoueurs <= game_nbJoueursMax)){
             nbJoueursIsOK = true;
           }else{
@@ -182,7 +189,7 @@ if(filter){
           }
         }
 
-        if(tpsJeuxMin && tpsJeuxMax && nbJoueursIsOK && titleIsOK){
+        if(tpsJeuxMin && tpsJeuxMax && nbJoueursIsOK && titleExtentionIsOK && titleIsOK){
           if(game_tpsJeux >= tpsJeuxMin && game_tpsJeux <=tpsJeuxMax){
             tpsJeuxIsOK = true;
           }else{
@@ -190,7 +197,7 @@ if(filter){
           }
         }
 
-        if(categories &&tpsJeuxIsOK && nbJoueursIsOK && titleIsOK){
+        if(categories &&tpsJeuxIsOK && nbJoueursIsOK && titleExtentionIsOK && titleIsOK){
           for(let cat of categories){
             if(!game.categories.includes(cat)){
               categoriesIsOK = false;
@@ -199,15 +206,13 @@ if(filter){
           }
         }
 
-        if(titleIsOK && nbJoueursIsOK && tpsJeuxIsOK && categoriesIsOK){
+        if(titleIsOK && titleExtentionIsOK && nbJoueursIsOK && tpsJeuxIsOK && categoriesIsOK){
           gamesResult.push(game);
         }
       }
     }else{
       gamesResult = this.games;
     }
-
-      console.log(gamesResult.length);
       return gamesResult;
 
     }

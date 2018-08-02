@@ -1,5 +1,13 @@
 // fichier scss
 
+
+ img.superpose {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    height: 150px;
+ }
+
 #pictureOfList img{
     width: 100%;
     height: auto;

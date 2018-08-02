@@ -13,6 +13,8 @@
 
         <h1>{{ game.title }}</h1>
 
+        <h2 [ngClass]="game.isExtention? 'collapse show' : 'collapse'">Extension : {{ game.titleExtention }}</h2>
+
         <!--<h3>Catégorie : {{ game.categorie }}</h3>-->
         <h3>Nombre de joueurs : {{ game.nbJoueursMin }} à {{ game.nbJoueursMax }}</h3>
         <h3>Temps de jeux : {{ game.tpsJeux }} min</h3>

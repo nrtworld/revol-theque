@@ -27,6 +27,7 @@ export class EditGameComponent implements OnInit, OnDestroy {
   fileUrl: string;
   fileUploaded = false;
   wantNewCategorie: boolean = false;
+  isExtention: boolean = false;
 
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -50,10 +51,11 @@ export class EditGameComponent implements OnInit, OnDestroy {
         this.game = game;
         this.photo = game.photo;
         this.oldPhoto = game.photo;
-        this.categories2 = this.game.categories;
+        this.categories2 = (this.game.categories)?this.game.categories:[];
         for(let cat of this.categories2){
           this.categories.splice(this.categories.indexOf(cat),1);
         }
+        this.isExtention = game.isExtention;
       }
     );
     this.initForm();
@@ -63,6 +65,8 @@ export class EditGameComponent implements OnInit, OnDestroy {
     this.gameForm = this.formBuilder.group({
       title: ['', Validators.minLength(1)],
       categories: [''],
+      isExtention: [''],
+      titleExtention: [''],
       nbJoueursMin: ['',Validators.minLength(1)],
       nbJoueursMax: ['', Validators.minLength(1)],
       tpsJeux: ['', Validators.minLength(1)],
@@ -80,6 +84,8 @@ export class EditGameComponent implements OnInit, OnDestroy {
     const nbJoueursMax = this.gameForm.get('nbJoueursMax').value;
     const tpsJeux = this.gameForm.get('tpsJeux').value;
     const synopsis = this.gameForm.get('synopsis').value;
+    const titleExtention = this.gameForm.get('titleExtention').value;
+    const isExtention = this.gameForm.get('isExtention').value;
 
     const newGame = new Game();
     
@@ -90,12 +96,19 @@ export class EditGameComponent implements OnInit, OnDestroy {
     newGame.synopsis = synopsis? synopsis : this.game.synopsis;
     newGame.tpsJeux = tpsJeux? tpsJeux : this.game.tpsJeux;
      newGame.photo = this.photo;
+     newGame.isExtention = isExtention;
+    newGame.titleExtention = titleExtention;
      this.gameService.deletePhotoInStorage(this.oldPhoto);
     
 console.log('photo : '+ newGame.photo);
 const id = this.route.snapshot.params['id'];
     this.gameService.editGame(this.game,newGame, id);
     this.location.back();
+  }
+
+  thisIsAnExtention(){
+    this.isExtention = !this.isExtention;
+    this.gameForm.get('titleExtention').setValue('');
   }
 
   onBack(){

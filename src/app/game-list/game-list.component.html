@@ -1,60 +1,67 @@
-
-<div id="hautdepage"></div> 
-<a href="games#hautdepage" >
-<div id="onTop">
-  <img src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fx-wing_yellow.png?alt=media&token=05c01a40-00cb-4033-a67f-465d34634c71"
-  id="goOnTop">
+<div id="hautdepage">
 </div>
+<a href="games#hautdepage">
+  <div id="onTop">
+    <img src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fx-wing_yellow.png?alt=media&token=05c01a40-00cb-4033-a67f-465d34634c71"
+      id="goOnTop">
+  </div>
 </a>
 <div class="row">
   <button class="btn btn-primary" style="margin-top: 2%; margin-bottom: 5px;" (click)="onNewGame()">Nouveau Jeu</button>
   <div style="width: 100%;">
-  <app-search></app-search>
+    <app-search></app-search>
   </div>
-  <h2 style="width: 100%; margin: auto;">Vos Jeux</h2>
+  <h2 style="width: 100%; margin: auto;">Vos Jeux ({{games.length}})</h2>
   <div class="list-group" id="flex-container">
 
 
 
     <!--##########################################################################################################################################-->
-    <div class="card" style="max-width: 286px;border-radius: 20px;margin-top: 1%;background-color: rgba(255, 255, 255, 0.3);" id="oneGameContainer" *ngFor="let game of games; let i = index">
+    <div class="card" style="max-width: 286px;height: 500px; border-radius: 20px;margin-top: 1%;background-color: rgba(255, 255, 255, 0.3);"
+      id="oneGameContainer" *ngFor="let game of games; let i = index">
       <div style="margin-bottom: 100px;" (click)="onViewGame(game)">
         <div style="height: 286px;border-radius: 20px;">
-      <img class="card-img-top" *ngIf="game.photo" [src]="game.photo" style="max-width: 286px;max-height: 286px;border-radius: 20px;" />
+          <div style="position: relative;">
+            <img class="card-img-top" *ngIf="game.photo" [src]="game.photo" style="max-width: 286px;max-height: 286px;border-radius: 20px;"/>
+            <img [ngClass]="game.isExtention?' collapse show superpose' : 'collapse'" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fextentions%20banni%C3%A8re%20VF.png?alt=media&token=058d4679-0f2f-43bd-8916-0c5f7ecfae6d"/>
           </div>
-          <h5 class="card-title" style="overflow:hidden; text-overflow: ellipsis;white-space: nowrap;margin-top: 2%">
-            {{ game.title }}
-          </h5>
-          
-          
-          <div  id="infoGame">
-          
-                <img style="max-width: 20%;" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2FStormtrooper%20-%2001%20(1).png?alt=media&token=852a402b-29b8-4a6c-9be6-4c955b938b66">
+        </div>
+        <h5 class="card-title" style="overflow:hidden; text-overflow: ellipsis;white-space: nowrap;margin-top: 2%">
+          {{ game.title }}
+        </h5>
+        <h6 [ngClass]="game.isExtention?' collapse show' : 'collapse'" style="overflow:hidden; text-overflow: ellipsis;white-space: nowrap;margin-top: 2%">
+          {{ game.titleExtention }}
+        </h6>
 
-              
-                <h6 style="width: 20%;text-align: center;margin-right: 20%;margin-top: 5%">  :   {{game.nbJoueursMin}} à {{game.nbJoueursMax}}</h6>
-        
-              
-              
-                <img style="max-width: 20%;margin-top: 2%" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fclock_icon-icons.com_64800.png?alt=media&token=3b0cbcd4-7f0b-4f02-9aca-fed7e7921516">
-              
-                <h6 style="width: 20%;margin-top: 4%;">  :   {{game.tpsJeux}} min</h6>
-              
+
+        <div id="infoGame">
+
+          <img style="max-width: 20%;" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2FStormtrooper%20-%2001%20(1).png?alt=media&token=852a402b-29b8-4a6c-9be6-4c955b938b66">
+
+
+          <h6 style="width: 20%;text-align: center;margin-right: 20%;margin-top: 5%"> : {{game.nbJoueursMin}} à {{game.nbJoueursMax}}</h6>
+
+
+
+          <img style="max-width: 20%;margin-top: 2%" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fclock_icon-icons.com_64800.png?alt=media&token=3b0cbcd4-7f0b-4f02-9aca-fed7e7921516">
+
+          <h6 style="width: 20%;margin-top: 4%;"> : {{game.tpsJeux}} min</h6>
+
         </div>
-          
-          
-          <!-- <p class="list-group-item-text">{{ game.categorie }}</p>-->
-        </div>
-        
-        <div style="position: absolute; bottom: 0px;" >
-          <img style="width: 20%;cursor: pointer;" class="rounded float-right" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fcroix%20laser.png?alt=media&token=0cfd57ce-3b00-4a52-a8c5-f0d5256114e5"
-            id="icones" (click)="onDeleteGame(game)">
-       
-        <img style="width: 30%;cursor: pointer;" class="rounded float-left" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fedit.png?alt=media&token=4f4dae2a-b68a-4046-aa40-cc28a2dd5206"
-        (click)="onEditGame(game)">
-        </div>
+
+
+        <!-- <p class="list-group-item-text">{{ game.categorie }}</p>-->
       </div>
-<!--##########################################################################################################################################-->
+
+      <div style="position: absolute; bottom: 0px;">
+        <img style="width: 20%;cursor: pointer;" class="rounded float-right" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fcroix%20laser.png?alt=media&token=0cfd57ce-3b00-4a52-a8c5-f0d5256114e5"
+          id="icones" (click)="onDeleteGame(game)">
+
+        <img style="width: 30%;cursor: pointer;" class="rounded float-left" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fedit.png?alt=media&token=4f4dae2a-b68a-4046-aa40-cc28a2dd5206"
+          (click)="onEditGame(game)">
+      </div>
+    </div>
+    <!--##########################################################################################################################################-->
 
     <!--<div class="list-group-item" id="oneGameContainer" *ngFor="let game of games; let i = index">
       <div (click)="onViewGame(i)" class="rounded float-left" style="width: 90%">
@@ -99,6 +106,6 @@
     </div>-->
   </div>
   <button class="btn btn-primary" style="margin-top: 2%;" (click)="onNewGame()">Nouveau Jeux</button>
-  
+
 
 </div>

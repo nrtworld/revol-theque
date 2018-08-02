@@ -1,6 +1,7 @@
 export class FiltreGame{
 
     title: string;
+    titleExtention: string;
     photo: string;
     nbJoueurs: number;
     tpsJeuxMin: number;

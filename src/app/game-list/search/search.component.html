@@ -22,16 +22,19 @@
           <label for="tpsJeuxMax">Temps de jeux Maximum</label>
           <input type="text" id="tpsJeuxMax" class="form-control" formControlName="tpsJeuxMax">
         </div>
+        <div class="form-group" id="champFilter">
+          <label for="title">Titre Extention</label>
+          <input type="text" id="titleExtention" class="form-control" formControlName="titleExtention">
+        </div>
+        <div class="form-group">
+          <label for="categories2">Catégories</label>
+          <div class="categories">
+            <button *ngFor="let cat of categories" [ngClass]="(isCatSelected(cat))?'btn btn-success':'btn btn-dark'" style="margin-left: 1%;margin-top: 1%;width: 122px;"
+              type="button" id="categories2" (click)="selectCategorie(cat)">{{ cat }}</button>
+          </div>
       </div>
 
-      <div class="form-group">
-        <label for="categories2">Catégories</label>
-          <div class="categories" >
-            <button *ngFor="let cat of categories" 
-            [ngClass]="(isCatSelected(cat))?'btn btn-success':'btn btn-dark'" style="margin-left: 1%;margin-top: 1%;width: 122px;"
-            type="button" id="categories2" (click)="selectCategorie(cat)">{{ cat }}</button>
-          </div>
-      
+
       </div>
 
 

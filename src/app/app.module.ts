@@ -31,6 +31,7 @@ const appRoutes: Routes = [
   {path: '', redirectTo: 'games', pathMatch: 'full'},
   { path: '**', redirectTo: 'games' }
 ];
+//AIzaSyDkZ3pta-PPYzk7VBw-ul9BL75oiFwPUzs
 
 @NgModule({
   declarations: [

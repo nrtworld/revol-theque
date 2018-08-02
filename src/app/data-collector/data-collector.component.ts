@@ -1,5 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { NodeEventHandler } from 'rxjs/internal/observable/fromEvent';
+import { EventManager } from '@angular/platform-browser';
+import { GamesService } from '../services/games.service';
+import { FileUploader } from 'ng2-file-upload';
+import { FileDetector } from 'selenium-webdriver/remote';
+import { Stream } from 'stream';
+
+
 
 @Component({
   selector: 'app-data-collector',
@@ -8,9 +16,10 @@ import { HttpClient } from '@angular/common/http';
 })
 export class DataCollectorComponent implements OnInit {
 
-  title: string = 'monopoly';
+  title: string = 'SuperLaser';
   titleMinify: string = '';
   urlStart: string = 'https://fr.wikipedia.org/wiki/';
+  urlImgStart: string = 'http://images.google.com/search?tbm=isch&q='
   url: string;
   data: string = '';
   table: string[];
@@ -20,7 +29,8 @@ export class DataCollectorComponent implements OnInit {
   joueurs: string = '';
   age: string = '';
   temps: string = '';
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient,
+    private gameService: GamesService) { }
 
   ngOnInit() {
 
@@ -29,27 +39,92 @@ export class DataCollectorComponent implements OnInit {
 
   private initCollect() {
     this.titleMinify = this.minifyString(this.title);
-    this.url = this.urlStart + this.titleMinify;
-    this._http.get(this.url, {
-      responseType: 'text', headers: {
-        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-      }
-    }).subscribe((data) => {
-      this.extractInfo(data);
-    }, (error) => {
-      console.log('passage en majuscule');
-      this.title = this.allFirstLetterInUppercase(this.title);
-      this.titleMinify = this.minifyString(this.title);
-      this.url = this.urlStart + this.titleMinify;
-      this._http.get(this.url, {
-        responseType: 'text', headers: {
-          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-        }
-      }).subscribe((data) => {
-        this.extractInfo(data);
-      });
-    });
+    this.url = this.urlImgStart + this.title;
+    /*  this._http.get(this.url, {
+       responseType: 'text', headers: {
+         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+       }
+     }).subscribe((data) => {
+       this.extractInfo(data);
+     }, (error) => {
+       console.log('passage en majuscule');
+       this.title = this.allFirstLetterInUppercase(this.title);
+       this.titleMinify = this.minifyString(this.title);
+       this.url = this.urlStart + this.titleMinify;
+       this._http.get(this.url, {
+         responseType: 'text', headers: {
+           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+         }
+       }).subscribe((data) => {
+         this.extractInfo(data);
+       });
+     }); */
   }
+
+  getImage() {
+    window.open(this.url, "", "width=600,height=400,scrollbars=0,top=100px,right=100px");
+
+  }
+  getImageDropped(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    console.log('test');
+    var items = event.dataTransfer.items;
+    console.log('items : ' + items);
+    var index = 0;
+    while (index < items.length) {
+
+      var img: File;
+      var file = items[index];
+      if (file.kind == 'string') {
+        file.getAsString(
+          (s) => {
+            console.log('string reçu : ' + s);
+            this._http.get(s, {
+              responseType: 'blob', headers: {
+                'Content-Type': 'blob'
+              }
+            }).subscribe((data: any) => {
+              console.log('data : ' + data.toString());
+              var filetab = s.toString().split('.');
+              var fileExtention = filetab.pop().split('/').shift();
+              var fileName = this.title+'.'+fileExtention;
+              console.log('fichier : '+ fileName)
+             img = this.blobToFile(data,fileName);
+             this.onUploadFile(img);
+            },(error)=>{
+              console.log('erreur de récupération d\'url : ' + error.toString());
+            });
+          }
+        );
+      } else if (file.kind == 'file' && file.type.match('^image/')) {
+        img = file.getAsFile();
+        this.onUploadFile(img);
+      }
+      ++index;
+    }
+  }
+
+  public blobToFile = (theBlob: Blob, fileName:string): File => {
+    var b: any = theBlob;
+    //A Blob() is almost a File() - it's just missing the two properties below which we will add
+    b.lastModifiedDate = new Date();
+    b.name = fileName;
+
+    //Cast to a File() type
+    return <File>b;
+}
+
+  onUploadFile(file: File) {
+
+    this.gameService.uploadFile(file).then(
+      (url: string) => {
+        console.log('URL onUploadFile = ' + url);
+      }
+    );
+  }
+
+
 
   private extractInfo(data: string) {
     this.table = data.split('<table>');
@@ -92,7 +167,7 @@ export class DataCollectorComponent implements OnInit {
   }
 
   minifyString(s: string) {
-    var sm = s.replace(' ','_');
+    var sm = s.replace(' ', '_');
     return sm;
   }
 

@@ -9,6 +9,7 @@ import { CategoriesGamesService } from '../../services/categoriesGames.service';
 import { Subscription } from 'rxjs';
 import { Collector } from '../../models/collector.model';
 import { DataCollectorService } from '../../services/dataCollector.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-game-form',
@@ -21,16 +22,20 @@ export class GameFormComponent implements OnInit, OnDestroy {
   gameForm: FormGroup;
   categories: string[] = [];
   categories2: string[] = [];
+  categories3: string[] = [];
   categoriesGamesSubscription = new Subscription;
+  urlImgStart: string = 'http://images.google.com/search?tbm=isch&q=';
   fileIsUploading = false;
   fileUrl: string;
   fileUploaded = false;
   wantNewCategorie: boolean = false;
+  isExtention: boolean = false;
 
   dataSubscription = new Subscription;
   collector: Collector;
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private _http: HttpClient,
+    private formBuilder: FormBuilder,
     private gameService: GamesService,
     private router: Router,
     private location: Location,
@@ -50,6 +55,8 @@ export class GameFormComponent implements OnInit, OnDestroy {
   initForm() {
     this.gameForm = this.formBuilder.group({
       title: ['', Validators.required],
+      isExtention: [''],
+      titleExtention: [''],
       categories2: [''],
       nbJoueursMin: ['', [Validators.required, Validators.pattern('[0-9]+')]],
       nbJoueursMax: ['', [Validators.required, Validators.pattern('[0-9]+')]],
@@ -64,6 +71,8 @@ export class GameFormComponent implements OnInit, OnDestroy {
 
   onSaveGame() {
     const title = this.gameForm.get('title').value;
+    const titleExtention = this.gameForm.get('titleExtention').value;
+    const isExtention = this.gameForm.get('isExtention').value;
     const nbJoueursMin = this.gameForm.get('nbJoueursMin').value;
     const nbJoueursMax = this.gameForm.get('nbJoueursMax').value;
     const tpsJeux = this.gameForm.get('tpsJeux').value;
@@ -71,6 +80,8 @@ export class GameFormComponent implements OnInit, OnDestroy {
 
     const newGame = new Game();
     newGame.title = title;
+    newGame.isExtention = isExtention;
+    newGame.titleExtention = titleExtention;
     newGame.categories = this.categories2;
     newGame.nbJoueursMin = nbJoueursMin;
     newGame.nbJoueursMax = nbJoueursMax;
@@ -94,12 +105,17 @@ export class GameFormComponent implements OnInit, OnDestroy {
     this.addNewCategorieOrNot();
   }
 
-  onSaveWikiCategorie(newCat : string) {
+  onSaveWikiCategorie(newCat: string) {
 
     if (newCat && newCat !== 'nouvelle catégorie') {
       this.categoriesGamesService.createNewCategorie(newCat);
       this.selectCategorie(newCat);
     }
+  }
+
+  thisIsAnExtention() {
+    this.isExtention = !this.isExtention;
+    this.gameForm.get('titleExtention').setValue('');
   }
 
   onBack() {
@@ -123,12 +139,62 @@ export class GameFormComponent implements OnInit, OnDestroy {
     this.onUploadFile(event.target.files[0]);
   }
 
+  getImageDropped(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    console.log('test');
+    var items = event.dataTransfer.items;
+    console.log('items : ' + items);
+    var index = 0;
+    while (index < items.length) {
+
+      var img: File;
+      var file = items[index];
+      if (file.kind == 'string') {
+        file.getAsString(
+          (s) => {
+            console.log('string reçu : ' + s);
+            this._http.get(s, {
+              responseType: 'blob', headers: {
+                'Content-Type': 'blob'
+              }
+            }).subscribe((data: any) => {
+              console.log('data : ' + data.toString());
+              var filetab = s.toString().split('.');
+              var fileExtention = filetab.pop().split('/').shift();
+              var fileName = this.gameForm.get('title').value + (this.thisIsAnExtention?'_'+this.gameForm.get('titleExtention').value:'' ) + '.'+fileExtention;
+              console.log('fichier : '+ fileName)
+             img = this.blobToFile(data,fileName);
+             this.onUploadFile(img);
+            },(error)=>{
+              console.log('erreur de récupération d\'url : ' + error.toString());
+            });
+          }
+        );
+      } else if (file.kind == 'file' && file.type.match('^image/')) {
+        img = file.getAsFile();
+        this.onUploadFile(img);
+      }
+      ++index;
+    }
+  }
+
+  public blobToFile = (theBlob: Blob, fileName:string): File => {
+    var b: any = theBlob;
+    //A Blob() is almost a File() - it's just missing the two properties below which we will add
+    b.lastModifiedDate = new Date();
+    b.name = fileName;
+
+    //Cast to a File() type
+    return <File>b;
+}
+
   selectCategorie(cat: string) {
     const index: number = this.categories.indexOf(cat);
     this.categories.splice(index, 1);
-    if(!this.categories2.includes(cat)){
-    this.categories2.push(cat);
-    this.categories2.sort();
+    if (!this.categories2.includes(cat)) {
+      this.categories2.push(cat);
+      this.categories2.sort();
     }
   }
 
@@ -160,12 +226,37 @@ export class GameFormComponent implements OnInit, OnDestroy {
         this.gameForm.get('nbJoueursMax').setValue(this.collector.joueursMax);
         this.gameForm.get('tpsJeux').setValue(this.collector.temps);
         this.gameForm.get('synopsis').setValue(this.collector.themes.join(', '));
-        for(let cat of this.collector.mecanismes){
-          this.onSaveWikiCategorie(cat.substr(0,1).toUpperCase() +	cat.substr(1,cat.length).toLowerCase());
+        for (let cat of this.collector.mecanismes) {
+          if (cat != null && cat != '') {
+            var catname = cat.substr(0, 1).toUpperCase() + cat.substr(1, cat.length).toLowerCase();
+            if (!this.categories3.includes(catname)) {
+              this.categories3.push(cat.substr(0, 1).toUpperCase() + cat.substr(1, cat.length).toLowerCase());
+            }
+          }
         }
       }
     );
 
+  }
+
+  onFindImage(){
+    var title = this.gameForm.get('title').value;
+    var extention = this.gameForm.get('titleExtention').value;
+    var recherche = title;
+    if(extention && extention.length){
+      recherche = recherche +'+'+ extention;
+    }
+    var url = this.urlImgStart + recherche;
+    window.open(url,"","width=600,height=400,scrollbars=0,top=100px,right=100px");
+  }
+
+  validNewCat(cat: string) {
+    this.onSaveWikiCategorie(cat);
+    this.categories3.splice(this.categories3.indexOf(cat), 1);
+  }
+
+  removeCategories3(){
+    this.categories3 = [];
   }
 
 }

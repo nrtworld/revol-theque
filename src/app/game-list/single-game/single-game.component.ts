@@ -13,6 +13,7 @@ export class SingleGameComponent implements OnInit {
 
   game: Game;
 
+
   constructor(private route: ActivatedRoute, 
     private gameService: GamesService, 
     private router: Router,
