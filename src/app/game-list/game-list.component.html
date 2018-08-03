@@ -11,8 +11,10 @@
   <div style="width: 100%;">
     <app-search></app-search>
   </div>
-  <h2 style="width: 100%; margin: auto;">Vos Jeux ({{games.length}})</h2>
-  <div class="list-group" id="flex-container">
+  <div class="flex-container">
+  <h2 style="margin-left: 43%;width: fit-content;">Vos Jeux </h2><h2 *ngIf="games" style="margin-left: 6px;width: fit-content;">({{games.length}})</h2>
+</div>
+  <div class="list-group flex-container">
 
 
 
@@ -20,10 +22,10 @@
     <div class="card" style="max-width: 286px;height: 500px; border-radius: 20px;margin-top: 1%;background-color: rgba(255, 255, 255, 0.3);"
       id="oneGameContainer" *ngFor="let game of games; let i = index">
       <div style="margin-bottom: 100px;" (click)="onViewGame(game)">
-        <div style="height: 286px;border-radius: 20px;">
-          <div style="position: relative;">
-            <img class="card-img-top" *ngIf="game.photo" [src]="game.photo" style="max-width: 286px;max-height: 286px;border-radius: 20px;"/>
-            <img [ngClass]="game.isExtention?' collapse show superpose' : 'collapse'" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fextentions%20banni%C3%A8re%20VF.png?alt=media&token=058d4679-0f2f-43bd-8916-0c5f7ecfae6d"/>
+        <div class="flex-superpose-container" style="height: 286px;border-radius: 20px;">
+          <div  style="position: relative;margin: auto;">
+            <img  *ngIf="game.photo" [src]="game.photo" style="max-width: 286px;max-height: 286px;border-radius: 20px;"/>
+            <img  [ngClass]="game.isExtention?' collapse show superpose' : 'collapse'" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fextentions%20banni%C3%A8re%20VF.png?alt=media&token=058d4679-0f2f-43bd-8916-0c5f7ecfae6d"/>
           </div>
         </div>
         <h5 class="card-title" style="overflow:hidden; text-overflow: ellipsis;white-space: nowrap;margin-top: 2%">

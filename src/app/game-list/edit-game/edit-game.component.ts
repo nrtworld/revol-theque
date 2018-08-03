@@ -7,6 +7,7 @@ import { GamesCategories } from '../../models/gamesCategorie.enum';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { CategoriesGamesService } from '../../services/categoriesGames.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-edit-game',
@@ -28,13 +29,14 @@ export class EditGameComponent implements OnInit, OnDestroy {
   fileUploaded = false;
   wantNewCategorie: boolean = false;
   isExtention: boolean = false;
+  urlImgStart: string = 'http://images.google.com/search?tbm=isch&q=';
 
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-     private gameService: GamesService, 
-     private router: Router,
+     private gameService: GamesService,
      private location: Location,
-    private categoriesGamesService: CategoriesGamesService) { }
+    private categoriesGamesService: CategoriesGamesService,
+  private _http : HttpClient) { }
 
   ngOnInit() {
     this.categoriesGamesSubscription = this.categoriesGamesService.categoriesGamesSubject.subscribe(
@@ -49,8 +51,18 @@ export class EditGameComponent implements OnInit, OnDestroy {
     this.gameService.getSingleGames(+id).then(
       (game: Game)=>{
         this.game = game;
-        this.photo = game.photo;
+        this.photo = game.photo?game.photo:"";
         this.oldPhoto = game.photo;
+        
+        this.gameForm.get('title').setValue(this.game.title);
+        this.gameForm.get('isExtention').setValue(this.game.isExtention);
+        if(game.isExtention){
+        this.gameForm.get('titleExtention').setValue(this.game.titleExtention);
+        }
+        this.gameForm.get('nbJoueursMin').setValue(this.game.nbJoueursMin);
+        this.gameForm.get('nbJoueursMax').setValue(this.game.nbJoueursMax);
+        this.gameForm.get('tpsJeux').setValue(this.game.tpsJeux);
+        this.gameForm.get('synopsis').setValue(this.game.synopsis);
         this.categories2 = (this.game.categories)?this.game.categories:[];
         for(let cat of this.categories2){
           this.categories.splice(this.categories.indexOf(cat),1);
@@ -59,6 +71,7 @@ export class EditGameComponent implements OnInit, OnDestroy {
       }
     );
     this.initForm();
+
   }
 
   initForm(){
@@ -165,6 +178,67 @@ const id = this.route.snapshot.params['id'];
     }
     this.addNewCategorieOrNot();
   }
+
+  getImageDropped(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    console.log('test');
+    var items = event.dataTransfer.items;
+    console.log('items : ' + items);
+    var index = 0;
+    while (index < items.length) {
+
+      var img: File;
+      var file = items[index];
+      if (file.kind == 'string') {
+        file.getAsString(
+          (s) => {
+            console.log('string reçu : ' + s);
+            this._http.get(s, {
+              responseType: 'blob', headers: {
+                'Content-Type': 'blob'
+              }
+            }).subscribe((data: any) => {
+              console.log('data : ' + data.toString());
+              var filetab = s.toString().split('.');
+              var fileExtention = filetab.pop().split('/').shift();
+              var fileName = this.gameForm.get('title').value + (this.thisIsAnExtention?'_'+this.gameForm.get('titleExtention').value:'' ) + '.'+fileExtention;
+              console.log('fichier : '+ fileName)
+             img = this.blobToFile(data,fileName);
+             this.onUploadFile(img);
+            },(error)=>{
+              console.log('erreur de récupération d\'url : ' + error.toString());
+            });
+          }
+        );
+      } else if (file.kind == 'file' && file.type.match('^image/')) {
+        img = file.getAsFile();
+        this.onUploadFile(img);
+      }
+      ++index;
+    }
+  }
+
+  public blobToFile = (theBlob: Blob, fileName:string): File => {
+    var b: any = theBlob;
+    //A Blob() is almost a File() - it's just missing the two properties below which we will add
+    b.lastModifiedDate = new Date();
+    b.name = fileName;
+
+    //Cast to a File() type
+    return <File>b;
+}
+
+onFindImage(){
+  var title = this.gameForm.get('title').value;
+  var extention = this.gameForm.get('titleExtention').value;
+  var recherche = title;
+  if(extention && extention.length){
+    recherche = recherche +'+'+ extention;
+  }
+  var url = this.urlImgStart + recherche;
+  window.open(url,"","width=600,height=400,scrollbars=0,top=100px,right=100px");
+}
 
   ngOnDestroy(){
     this.categoriesGamesSubscription.unsubscribe();

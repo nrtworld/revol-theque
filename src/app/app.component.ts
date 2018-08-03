@@ -9,6 +9,7 @@ import { FilterGamesService } from './services/filterGames.service';
 })
 export class AppComponent {
   title = 'RevolThèque';
+  isNotFound: boolean = false;
 
 
   constructor(){

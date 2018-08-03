@@ -7,7 +7,7 @@
   <h5>{{meca}}</h5>
 </div>
 
-<button draggable="true" type="button" class="btn btn-warning" (click)="getImage()">Trouver Image</button>
+<button id="looseButton" type="button" class="btn btn-warning" (click)="getImage()">Trouver Image</button>
 
 <div dropzone="copy" id="dropzone" (dragover)="false" (dragend)="false" (drop)="getImageDropped($event)" ></div>
 

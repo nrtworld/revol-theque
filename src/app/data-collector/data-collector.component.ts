@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { NodeEventHandler } from 'rxjs/internal/observable/fromEvent';
-import { EventManager } from '@angular/platform-browser';
 import { GamesService } from '../services/games.service';
-import { FileUploader } from 'ng2-file-upload';
-import { FileDetector } from 'selenium-webdriver/remote';
-import { Stream } from 'stream';
 
 
 
@@ -179,4 +174,5 @@ export class DataCollectorComponent implements OnInit {
     return tab.join(' ');
 
   }
+
 }

@@ -42,12 +42,14 @@ export class GamesService {
   }
 
   public deletePhotoInStorage(url: string) {
+    if(url && url.length){
     const storageRef = firebase.storage().refFromURL(url);
     storageRef.delete().then(() => {
       console.log('photo supprimée');
     }, (error) => {
       console.log('Erreur de suppression : ' + error);
     });
+  }
   }
 
   editGame(oldGame: Game, newGame: Game, index: number) {
@@ -58,9 +60,7 @@ export class GamesService {
         if (oldUrl !== newUrl) {
           this.deletePhotoInStorage(oldGame.photo);
         }
-      } else {
-        this.deletePhotoInStorage(oldGame.photo);
-      }
+      } 
     }
     this.games.splice(index, 1, newGame);
     this.saveGames();
@@ -88,6 +88,7 @@ export class GamesService {
           (data: firebase.database.DataSnapshot) => {
             resolve(data.val());
           }, (error) => {
+            console.log('erreur  gameService.getSingleGames : ' + error);
             reject(error);
           }
         );
@@ -115,6 +116,7 @@ export class GamesService {
                 console.log('downLoadUrl : ' + url2.valueOf() );
                 resolve(url2.valueOf());
               }, (error) => {
+                console.log('erreur gameService.uploadFile : ' + error);
                 reject(error);
               }
             );

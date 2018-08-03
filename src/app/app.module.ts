@@ -19,6 +19,7 @@ import { CategoriesGamesService } from './services/categoriesGames.service';
 import { FilterGamesService } from './services/filterGames.service';
 import { DataCollectorComponent } from './data-collector/data-collector.component';
 import { DataCollectorService } from './services/dataCollector.service';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const appRoutes: Routes = [
   { path: 'auth/signup', component: SignupComponent },
@@ -28,8 +29,9 @@ const appRoutes: Routes = [
   { path: 'games/view/:id', canActivate: [AuthGuardService], component: SingleGameComponent },
   { path: 'games/edit/:id', canActivate: [AuthGuardService], component: EditGameComponent },
   { path: 'dataCollector', canActivate: [AuthGuardService], component: DataCollectorComponent },
+  { path: '404NotFound', canActivate: [AuthGuardService], component: PageNotFoundComponent },
   {path: '', redirectTo: 'games', pathMatch: 'full'},
-  { path: '**', redirectTo: 'games' }
+  { path: '**', redirectTo: '404NotFound' }
 ];
 //AIzaSyDkZ3pta-PPYzk7VBw-ul9BL75oiFwPUzs
 
@@ -45,7 +47,8 @@ const appRoutes: Routes = [
     EditGameComponent,
     EnumToArrayPipe,
     SearchComponent,
-    DataCollectorComponent
+    DataCollectorComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

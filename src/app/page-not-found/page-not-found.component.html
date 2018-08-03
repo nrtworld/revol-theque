@@ -1,0 +1,9 @@
+<div style="width: 100%;height: 100%">
+<h1 *ngIf="!isClicked">Ce n'est pas une page de l'appli, c'est une base sidérale!!!!</h1>
+<h2 *ngIf="!isClicked">Clique sur l'étoile noire pour revenir à l'appli</h2>
+<h1 *ngIf="isClicked"> TROP TARD!!!!!!!!!!!!!!!!!</h1>
+<h1 *ngIf="isClicked2"> RECOMMENCE</h1>
+<img id="image"  src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2FDeath_Star_II_404.png?alt=media&token=149ca6ef-8795-457e-9237-942a245d7cfe"
+  style="width: 100px;height: 100px;position:absolute;left: 50%;top: 50%; margin-left: -50px;margin-top: -50px;" (click)="goBack();">
+
+</div>

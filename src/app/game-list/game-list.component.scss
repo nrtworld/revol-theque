@@ -21,6 +21,14 @@
     margin-top: 15%;
 }
 
+.center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
 #icones{
     width: 50px;
 }
@@ -33,12 +41,17 @@
     flex-wrap: wrap;
 }
 
-#flex-container{
+.flex-container{
     width: 100%;
     display: flex; 
     flex-direction: row; 
     flex-wrap: wrap;
     margin: auto;
+}
+
+.flex-superpose-container{
+    display: flex;
+	align-items: center; 
 }
 
 #oneGameContainer{
