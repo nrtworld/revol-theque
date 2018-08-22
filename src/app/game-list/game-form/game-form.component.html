@@ -37,15 +37,17 @@
           <div class="form-group" >
               <label for="categories2">Catégories</label>
               <span class="flex-container-categories" >
+
               <select class="form-control" multiple style="width: 40%;background-color: rgba(255, 255, 255, 0.3);">
-                  <option *ngFor="let cat of categories" (click)="selectCategorie(cat)" style="color: black;">{{cat}}</option>
+                  <option [ngClass]="getSelectedClass(cat)" *ngFor="let cat of categories" (click)="preSelectCategorie(cat)">{{cat}} </option>
                   <option style="color: black;" (click)="addNewCategorieOrNot();"> + une catégorie</option>
                 </select>
                 <div id="BB8">
-                  <img style="width: 100%;margin-top: 15%;" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fdroid_run.gif?alt=media&token=88fd459d-3baa-4699-b4f5-75d53f4a1d09">
+                  <img style="width: 100%;" (click)="selectCategories()" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fdroid_run%20(1).gif?alt=media&token=32461aa9-4116-451f-9939-b36ffe0665ab">
+                  <img style="width: 100%; margin-top: 5%;" (click)="deSelectCategories()" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Ftatooine-r2d2-c3p0.gif?alt=media&token=840972f1-9901-4050-a24c-cee649f05ae1">
                 </div>
               <select class="form-control" multiple style="width: 40%;background-color: rgba(255, 255, 255, 0.3);" id="Catégorie2">
-                  <option *ngFor="let cat of categories2" (click)="deSelectCategorie(cat)" style="color: rgb(8, 124, 23);">{{cat}}</option>
+                  <option [ngClass]="getDeSelectedClass(cat)" *ngFor="let cat of categories2" (click)="preDeSelectCategorie(cat)">{{cat}}</option>
               </select>
               <div [ngClass]="categories3.length>0?'flex-container-categories-column collapse show': 'collapse'" style="position: absolute;z-index: 150;width: 100%;">
               <span  class="flex-container-categories-column" style="margin: auto;width: 100%">

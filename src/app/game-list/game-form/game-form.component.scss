@@ -16,6 +16,26 @@
     width: 20%;
 }
 
+.option-selected{
+    color: black;
+    background-color: tomato;
+}
+
+.option-selected-cat2{
+    color: rgb(10, 238, 10);
+    text-shadow: black 0.1em 0.1em 0.2em;
+    background-color: tomato;
+}
+
+.option{
+    color: black;
+}
+
+.option-cat2{
+    color: rgb(10, 238, 10);
+    text-shadow: black 0.1em 0.1em 0.2em;
+}
+
 @-webkit-keyframes masuperanimation { /* Safari, Opera, Chrome */
     0% {
         transform: translateX(0px);

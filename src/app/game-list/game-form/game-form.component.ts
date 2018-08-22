@@ -23,6 +23,8 @@ export class GameFormComponent implements OnInit, OnDestroy {
   categories: string[] = [];
   categories2: string[] = [];
   categories3: string[] = [];
+  preSelectedCategories: string[] = [];
+  preDeSelectedCategories: string[] = [];
   categoriesGamesSubscription = new Subscription;
   urlImgStart: string = 'http://images.google.com/search?tbm=isch&q=';
   fileIsUploading = false;
@@ -33,6 +35,15 @@ export class GameFormComponent implements OnInit, OnDestroy {
 
   dataSubscription = new Subscription;
   collector: Collector;
+
+  private readonly OPTION_SELECTED = "option-selected";
+
+  private readonly OPTION_NOT_SELECTED = "option";
+
+  private readonly OPTION_SELECTED_CAT2 = "option-selected-cat2";
+
+  private readonly OPTION_NOT_SELECTED_CAT2 = "option-cat2";
+
 
   constructor(private _http: HttpClient,
     private formBuilder: FormBuilder,
@@ -109,7 +120,9 @@ export class GameFormComponent implements OnInit, OnDestroy {
 
     if (newCat && newCat !== 'nouvelle catégorie') {
       this.categoriesGamesService.createNewCategorie(newCat);
-      this.selectCategorie(newCat);
+      this.preSelectedCategories = [];
+      this.preDeSelectCategorie(newCat);
+      this.selectCategories();
     }
   }
 
@@ -189,21 +202,43 @@ export class GameFormComponent implements OnInit, OnDestroy {
     return <File>b;
 }
 
-  selectCategorie(cat: string) {
+preSelectCategorie(cat: string){
+  if(this.preSelectedCategories.includes(cat)){
+    this.preSelectedCategories.splice(this.preSelectedCategories.indexOf(cat),1);
+  }else{
+    this.preSelectedCategories.push(cat);
+  }
+}
+
+  selectCategories() {
+    for(let cat of this.preSelectedCategories){
     const index: number = this.categories.indexOf(cat);
     this.categories.splice(index, 1);
     if (!this.categories2.includes(cat)) {
       this.categories2.push(cat);
-      this.categories2.sort();
+    }
+  }
+  this.categories2.sort();
+  this.preSelectedCategories = [];
+  }
+
+  preDeSelectCategorie(cat: string){
+    if(this.preDeSelectedCategories.includes(cat)){
+      this.preDeSelectedCategories.splice(this.preDeSelectedCategories.indexOf(cat),1);
+    }else{
+      this.preDeSelectedCategories.push(cat);
     }
   }
 
-  deSelectCategorie(cat: string) {
+  deSelectCategories() {
+    for(let cat of this.preDeSelectedCategories){
     const index: number = this.categories2.indexOf(cat);
     this.categories2.splice(index, 1);
     this.categories.push(cat);
-    this.categories.sort();
   }
+  this.categories.sort();
+  this.preDeSelectedCategories = [];
+}
 
   enumToArray(data: Object) {
     const keys = Object.keys(data);
@@ -215,7 +250,7 @@ export class GameFormComponent implements OnInit, OnDestroy {
     this.dataSubscription.unsubscribe();
   }
 
-  collectInfo(value: string) {
+  collectInfo() {
     const title = this.gameForm.get('title').value;
     this.dataCollectorService.initCollect(title);
     console.log(title);
@@ -257,6 +292,22 @@ export class GameFormComponent implements OnInit, OnDestroy {
 
   removeCategories3(){
     this.categories3 = [];
+  }
+
+  getSelectedClass(cat: string){
+    if(this.preSelectedCategories.includes(cat)){
+      return this.OPTION_SELECTED;
+    }else{
+      return this.OPTION_NOT_SELECTED;
+    }
+  }
+
+  getDeSelectedClass(cat: string){
+    if(this.preDeSelectedCategories.includes(cat)){
+      return this.OPTION_SELECTED_CAT2;
+    }else{
+      return this.OPTION_NOT_SELECTED_CAT2;
+    }
   }
 
 }

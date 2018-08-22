@@ -21,8 +21,8 @@ export class AppComponent {
       storageBucket: "revol-theque.appspot.com",
       messagingSenderId: "661949876520"
     };
-    //firebase.initializeApp(config).auth().signOut();
-    firebase.initializeApp(config);
+    firebase.initializeApp(config).auth().signOut();
+    //firebase.initializeApp(config);
 
     
   }

@@ -23,6 +23,8 @@ export class EditGameComponent implements OnInit, OnDestroy {
   gameForm: FormGroup;
   categories: string[] = [];
   categories2: string[] = [];
+  preSelectedCategories: string[] = [];
+  preDeSelectedCategories: string[] = [];
   categoriesGamesSubscription = new Subscription;
   fileIsUploading = false;
   fileUrl: string;
@@ -30,6 +32,14 @@ export class EditGameComponent implements OnInit, OnDestroy {
   wantNewCategorie: boolean = false;
   isExtention: boolean = false;
   urlImgStart: string = 'http://images.google.com/search?tbm=isch&q=';
+
+  private readonly OPTION_SELECTED = "option-selected";
+
+  private readonly OPTION_NOT_SELECTED = "option";
+
+  private readonly OPTION_SELECTED_CAT2 = "option-selected-cat2";
+
+  private readonly OPTION_NOT_SELECTED_CAT2 = "option-cat2";
 
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -131,18 +141,40 @@ const id = this.route.snapshot.params['id'];
     this.location.back();
   }
 
-  selectCategorie(cat: string){
+  preSelectCategorie(cat: string){
+    if(this.preSelectedCategories.includes(cat)){
+      this.preSelectedCategories.splice(this.preSelectedCategories.indexOf(cat),1);
+    }else{
+      this.preSelectedCategories.push(cat);
+    }
+  }
+
+  selectCategories(){
+    for(let cat of this.preSelectedCategories){
     const index: number = this.categories.indexOf(cat);
     this.categories.splice(index,1);
     this.categories2.push(cat);
-    this.categories2.sort();
+  }
+  this.categories2.sort();
+  this.preSelectedCategories = [];
    }
  
-   deSelectCategorie(cat: string){
+   preDeSelectCategorie(cat: string){
+    if(this.preDeSelectedCategories.includes(cat)){
+      this.preDeSelectedCategories.splice(this.preDeSelectedCategories.indexOf(cat),1);
+    }else{
+      this.preDeSelectedCategories.push(cat);
+    }
+  }
+
+   deSelectCategories(){
+     for(let cat of this.preDeSelectedCategories){
      const index: number = this.categories2.indexOf(cat);
      this.categories2.splice(index,1);
      this.categories.push(cat);
+     }
      this.categories.sort();
+     this.preDeSelectedCategories = [];
     }
  
    enumToArray(data: Object){
@@ -242,5 +274,21 @@ onFindImage(){
 
   ngOnDestroy(){
     this.categoriesGamesSubscription.unsubscribe();
+  }
+
+  getSelectedClass(cat: string){
+    if(this.preSelectedCategories.includes(cat)){
+      return this.OPTION_SELECTED;
+    }else{
+      return this.OPTION_NOT_SELECTED;
+    }
+  }
+
+  getDeSelectedClass(cat: string){
+    if(this.preDeSelectedCategories.includes(cat)){
+      return this.OPTION_SELECTED_CAT2;
+    }else{
+      return this.OPTION_NOT_SELECTED_CAT2;
+    }
   }
 }

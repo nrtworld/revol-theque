@@ -17,7 +17,7 @@
       </div>
       <div [ngClass]="isExtention?'form-group collapse show' : 'collapse'">
         <label for="titleExtention">Titre de l'extention</label>
-        <input type="text" id="titleExtention"  formControlName="titleExtention" class="form-control">
+        <input type="text" id="titleExtention" formControlName="titleExtention" class="form-control">
       </div>
       <div class="form-group">
         <h4>changer la photo</h4>
@@ -38,14 +38,15 @@
         <label for="categories2">Catégories</label>
         <span id="flex-container-categories">
           <select class="form-control" multiple style="background-color: rgba(255, 255, 255, 0.3);width: 40%;">
-            <option style="color: black;" *ngFor="let cat of categories" (click)="selectCategorie(cat)">{{cat}}</option>
+            <option [ngClass]="getSelectedClass(cat)" *ngFor="let cat of categories" (click)="preSelectCategorie(cat)">{{cat}}</option>
             <option style="color: black;" (click)="addNewCategorieOrNot();"> + une catégorie</option>
           </select>
           <div id="BB8">
-            <img style="width: 100%;margin-top: 15%;" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fdroid_run.gif?alt=media&token=88fd459d-3baa-4699-b4f5-75d53f4a1d09">
+            <img style="width: 100%;" (click)="selectCategories()" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fdroid_run%20(1).gif?alt=media&token=32461aa9-4116-451f-9939-b36ffe0665ab">
+            <img style="width: 100%; margin-top: 5%;" (click)="deSelectCategories()" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Ftatooine-r2d2-c3p0.gif?alt=media&token=840972f1-9901-4050-a24c-cee649f05ae1">
           </div>
           <select class="form-control" multiple style="width: 40%;background-color: rgba(255, 255, 255, 0.3);" id="Catégorie2">
-            <option style="color: rgb(10, 238, 10);text-shadow: black 0.1em 0.1em 0.2em;" *ngFor="let cat of categories2" (click)="deSelectCategorie(cat)">{{cat}}</option>
+            <option [ngClass]="getDeSelectedClass(cat)" *ngFor="let cat of categories2" (click)="preDeSelectCategorie(cat)">{{cat}}</option>
           </select>
         </span>
       </div>
@@ -63,20 +64,20 @@
 
       <div class="form-group">
         <label for="nbJoueursMin">Nombre de Joueur minimum</label>
-        <input type="text" id="nbJoueursMin"  class="form-control" formControlName="nbJoueursMin">
+        <input type="text" id="nbJoueursMin" class="form-control" formControlName="nbJoueursMin">
       </div>
       <div class="form-group">
         <label for="nbJoueursMax">Nombre de Joueur Maximum</label>
-        <input type="text" id="nbJoueursMax"  class="form-control" formControlName="nbJoueursMax">
+        <input type="text" id="nbJoueursMax" class="form-control" formControlName="nbJoueursMax">
       </div>
       <div class="form-group">
         <label for="tpsJeux">Temps de jeux</label>
-        <input type="text" id="tpsJeux"  class="form-control" formControlName="tpsJeux">
+        <input type="text" id="tpsJeux" class="form-control" formControlName="tpsJeux">
       </div>
       <div class="form-group">
         <label for="synopsis">synopsis</label>
-        <textarea id="synopsis" style="height: 150px;background-color: rgba(255, 255, 255, 0.3);color: black;"
-          class="form-control" formControlName="synopsis">
+        <textarea id="synopsis" style="height: 150px;background-color: rgba(255, 255, 255, 0.3);color: black;" class="form-control"
+          formControlName="synopsis">
           </textarea>
       </div>
 
