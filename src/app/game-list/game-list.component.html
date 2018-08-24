@@ -1,6 +1,6 @@
 <div id="hautdepage">
 </div>
-<a href="games#hautdepage">
+<a class="computer" href="games#hautdepage">
   <div id="onTop">
     <img src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fx-wing_yellow.png?alt=media&token=05c01a40-00cb-4033-a67f-465d34634c71"
       id="goOnTop">
@@ -11,27 +11,27 @@
   <div style="width: 100%;">
     <app-search></app-search>
   </div>
-  <div class="flex-container">
-  <h2 style="margin-left: 43%;width: fit-content;">Vos Jeux </h2><h2 *ngIf="games" style="margin-left: 6px;width: fit-content;">({{games.length}})</h2>
-</div>
+  
+  <h2 class="flex-container"><div class="pageTitle">Vos Jeux </div><div class="nbGames" *ngIf="games">({{games.length}})</div></h2>
+
   <div class="list-group flex-container">
 
 
 
     <!--##########################################################################################################################################-->
-    <div class="card" style="max-width: 286px;height: 500px; border-radius: 20px;margin-top: 1%;background-color: rgba(255, 255, 255, 0.3);"
+    <div class="card"
       id="oneGameContainer" *ngFor="let game of games; let i = index">
       <div style="margin-bottom: 100px;" (click)="onViewGame(game)">
-        <div class="flex-superpose-container" style="height: 286px;border-radius: 20px;">
+        <div class="flex-superpose-container computer" style="height: 286px;border-radius: 20px;">
           <div  style="position: relative;margin: auto;">
-            <img  *ngIf="game.photo" [src]="game.photo" style="max-width: 286px;max-height: 286px;border-radius: 20px;"/>
+            <img  *ngIf="game.photo" [src]="game.photo" style="max-width: 270px;max-height: 270px;border-radius: 20px;"/>
             <img  [ngClass]="game.isExtention?' collapse show superpose' : 'collapse'" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fextentions%20banni%C3%A8re%20VF.png?alt=media&token=058d4679-0f2f-43bd-8916-0c5f7ecfae6d"/>
           </div>
         </div>
-        <h5 class="card-title" style="overflow:hidden; text-overflow: ellipsis;white-space: nowrap;margin-top: 2%">
+        <h5 class="gameTitle">
           {{ game.title }}
         </h5>
-        <h6 [ngClass]="game.isExtention?' collapse show' : 'collapse'" style="overflow:hidden; text-overflow: ellipsis;white-space: nowrap;margin-top: 2%">
+        <h6 [ngClass]="game.isExtention?' collapse show' : 'collapse'" id="titleExtention">
           {{ game.titleExtention }}
         </h6>
 
@@ -55,12 +55,13 @@
         <!-- <p class="list-group-item-text">{{ game.categorie }}</p>-->
       </div>
 
-      <div style="position: absolute; bottom: 0px;">
-        <img style="width: 20%;cursor: pointer;" class="rounded float-right" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fcroix%20laser.png?alt=media&token=0cfd57ce-3b00-4a52-a8c5-f0d5256114e5"
-          id="icones" (click)="onDeleteGame(game)">
+      <div style="position: absolute; bottom: 0px;height: 70px;width: 100%;">
+        <img class="rounded button-delete" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fcroix%20laser.png?alt=media&token=0cfd57ce-3b00-4a52-a8c5-f0d5256114e5"
+       (click)="onDeleteGame(game)">
 
-        <img style="width: 30%;cursor: pointer;" class="rounded float-left" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fedit.png?alt=media&token=4f4dae2a-b68a-4046-aa40-cc28a2dd5206"
+        <img  class="rounded  button-edit" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fedit.png?alt=media&token=4f4dae2a-b68a-4046-aa40-cc28a2dd5206"
           (click)="onEditGame(game)">
+          <img  class="photoSmall device" *ngIf="game.photo" [src]="game.photo">
       </div>
     </div>
     <!--##########################################################################################################################################-->

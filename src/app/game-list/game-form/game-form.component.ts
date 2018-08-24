@@ -66,6 +66,7 @@ export class GameFormComponent implements OnInit, OnDestroy {
   initForm() {
     this.gameForm = this.formBuilder.group({
       title: ['', Validators.required],
+      urlImage: [''],
       isExtention: [''],
       titleExtention: [''],
       categories2: [''],
@@ -75,7 +76,7 @@ export class GameFormComponent implements OnInit, OnDestroy {
       synopsis: ['', Validators.required]
     });
     this.categorieForm = this.formBuilder.group({
-      newCategorie: ['........', [Validators.required, Validators.pattern("^((?:\\w|[\\-_ ](?![\\-_ ])|[\\u0027\\u00C0\\u00C1\\u00C2\\u00C3\\u00C4\\u00C5\\u00C6\\u00C7\\u00C8\\u00C9\\u00CA\\u00CB\\u00CC\\u00CD\\u00CE\\u00CF\\u00D0\\u00D1\\u00D2\\u00D3\\u00D4\\u00D5\\u00D6\\u00D8\\u00D9\\u00DA\\u00DB\\u00DC\\u00DD\\u00DF\\u00E0\\u00E1\\u00E2\\u00E3\\u00E4\\u00E5\\u00E6\\u00E7\\u00E8\\u00E9\\u00EA\\u00EB\\u00EC\\u00ED\\u00EE\\u00EF\\u00F0\\u00F1\\u00F2\\u00F3\\u00F4\\u00F5\\u00F6\\u00F9\\u00FA\\u00FB\\u00FC\\u00FD\\u00FF\\u0153])+)$")]]
+      newCategorie: ['', [Validators.required, Validators.pattern("^((?:\\w|[\\-_ ](?![\\-_ ])|[\\u0027\\u00C0\\u00C1\\u00C2\\u00C3\\u00C4\\u00C5\\u00C6\\u00C7\\u00C8\\u00C9\\u00CA\\u00CB\\u00CC\\u00CD\\u00CE\\u00CF\\u00D0\\u00D1\\u00D2\\u00D3\\u00D4\\u00D5\\u00D6\\u00D8\\u00D9\\u00DA\\u00DB\\u00DC\\u00DD\\u00DF\\u00E0\\u00E1\\u00E2\\u00E3\\u00E4\\u00E5\\u00E6\\u00E7\\u00E8\\u00E9\\u00EA\\u00EB\\u00EC\\u00ED\\u00EE\\u00EF\\u00F0\\u00F1\\u00F2\\u00F3\\u00F4\\u00F5\\u00F6\\u00F9\\u00FA\\u00FB\\u00FC\\u00FD\\u00FF\\u0153])+)$")]]
     });
   }
 
@@ -167,21 +168,7 @@ export class GameFormComponent implements OnInit, OnDestroy {
         file.getAsString(
           (s) => {
             console.log('string reçu : ' + s);
-            this._http.get(s, {
-              responseType: 'blob', headers: {
-                'Content-Type': 'blob'
-              }
-            }).subscribe((data: any) => {
-              console.log('data : ' + data.toString());
-              var filetab = s.toString().split('.');
-              var fileExtention = filetab.pop().split('/').shift();
-              var fileName = this.gameForm.get('title').value + (this.thisIsAnExtention?'_'+this.gameForm.get('titleExtention').value:'' ) + '.'+fileExtention;
-              console.log('fichier : '+ fileName)
-             img = this.blobToFile(data,fileName);
-             this.onUploadFile(img);
-            },(error)=>{
-              console.log('erreur de récupération d\'url : ' + error.toString());
-            });
+            img = this.getImageFromUrl(s);
           }
         );
       } else if (file.kind == 'file' && file.type.match('^image/')) {
@@ -201,6 +188,29 @@ export class GameFormComponent implements OnInit, OnDestroy {
     //Cast to a File() type
     return <File>b;
 }
+
+  private getImageFromUrl(s: string) {
+    if(s=='url'){
+      s = this.gameForm.get('urlImage').value;
+    }
+    var img: File;
+    this._http.get(s, {
+      responseType: 'blob', headers: {
+        'Content-Type': 'blob'
+      }
+    }).subscribe((data: any) => {
+      console.log('data : ' + data.toString());
+      var filetab = s.toString().split('.');
+      var fileExtention = filetab.pop().split('/').shift();
+      var fileName = this.gameForm.get('title').value + (this.thisIsAnExtention ? '_' + this.gameForm.get('titleExtention').value : '') + '.' + fileExtention;
+      console.log('fichier : ' + fileName);
+      img = this.blobToFile(data, fileName);
+      this.onUploadFile(img);
+    }, (error) => {
+      console.log('erreur de récupération d\'url : ' + error.toString());
+    });
+    return img;
+  }
 
 preSelectCategorie(cat: string){
   if(this.preSelectedCategories.includes(cat)){

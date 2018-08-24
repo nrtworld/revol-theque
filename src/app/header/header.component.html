@@ -7,7 +7,7 @@
       </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
-      <li  routerLinkActive="active" *ngIf="!isAuth">
+    <!--   <li  routerLinkActive="active" *ngIf="!isAuth">
         <a routerLink="auth/signup">Créer un compte</a>
       </li>
       <li routerLinkActive="active" *ngIf="!isAuth">
@@ -15,10 +15,22 @@
       </li>
       <li routerLinkActive="active" *ngIf="isAuth">
         <a routerLink="auth/signin"  (click)="onSignOut()">Je retourne du côté lumineux</a>
-      </li>
-      <li routerLinkActive="active" *ngIf="isAuth">
+      </li> -->
+
+          <button id="btnGroupDrop1" type="button" class="btn btn-secondary" (click)="openCloseMenu();">
+           <div [ngClass]="openMenu?'close':'open'"> menu ▼</div>
+           <div [ngClass]="openMenu?'open':'close'"> menu ▲</div>
+          </button>
+          
+          <div [ngClass]="openMenu?'collapse show':'collapse'" id="menu">
+            <div  id="sousMenu" routerLinkActive="active" *ngIf="!isAuth" routerLink="auth/signin">Connexion</div>
+            <div id="sousMenu" routerLinkActive="active" *ngIf="!isAuth" routerLink="auth/signup">Creer un compte</div>
+            <div id="sousMenu" routerLinkActive="active" routerLink="auth/signin" *ngIf="isAuth" (click)="onSignOut()">Déconnexion</div>
+          </div>
+
+    <!--   <li routerLinkActive="active" *ngIf="isAuth">
           <a routerLink="dataCollector" >Data collector</a>
-        </li>
+        </li> -->
     </ul>
   </div>
 </nav>

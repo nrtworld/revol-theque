@@ -10,7 +10,7 @@ import * as firebase from 'firebase';
 export class HeaderComponent implements OnInit {
 
   isAuth: boolean;
-
+openMenu: boolean = false;
 
   constructor(private authService: AuthService) { }
 
@@ -29,4 +29,9 @@ export class HeaderComponent implements OnInit {
   onSignOut(){
     this.authService.signOutuser();
   }
+
+  openCloseMenu(){
+    this.openMenu = !this.openMenu;
+  }
+
 }

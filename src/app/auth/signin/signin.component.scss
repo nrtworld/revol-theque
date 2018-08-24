@@ -1,6 +1,29 @@
 // fichier scss
 
+.computeur{
+    display: inline-block;
+}
+
+.device{
+    display: none;
+}
+
 input{
     background-color: rgba(255, 255, 255, 0.3);
     color: black,
 }
+
+//###################################################################################################################
+  //Gestion des écrans mobiles
+  $break-small: 411px;
+  @media screen and (max-width: $break-small) {
+
+  .computeur{
+      display: none;
+  }
+
+  .device{
+      display: inline-block;
+  }
+
+  }
