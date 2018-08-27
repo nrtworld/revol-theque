@@ -44,7 +44,7 @@ export class SearchComponent implements OnInit, OnDestroy {
           this.filterGames = filterGames;
           this.filterOn = this.filterGames ? true : false;
           if (this.filterOn) {
-            this.categories2 = filterGames.categories ? filterGames.categories : null;
+            this.categories2 = filterGames.categories ? filterGames.categories : [];
             this.gameForm.get('title').setValue(filterGames.title);
             this.gameForm.get('titleExtention').setValue(filterGames.titleExtention);
             this.gameForm.get('nbJoueurs').setValue(filterGames.nbJoueurs);

@@ -7,43 +7,46 @@
     <form [formGroup]="gameForm" (ngSubmit)="onSearchGame()" id="flexContainer">
       <div id="flexBody">
         <div class="form-group" id="champFilter">
-          <label for="title">Titre</label>
-          <input type="text" id="title" class="form-control" formControlName="title">
+          <label class="computer" for="title">Titre</label>
+          <input type="text" id="title" class="form-control" formControlName="title" placeholder="Titre...">
         </div>
         <div class="form-group" id="champFilter">
-          <label for="nbJoueurs">Nombre de Joueur</label>
-          <input type="text" id="nbJoueurs" class="form-control" formControlName="nbJoueurs">
+          <label class="computer" for="nbJoueurs">Nombre de Joueur</label>
+          <input type="text" id="nbJoueurs" class="form-control" formControlName="nbJoueurs" placeholder="Nombre de Joueur...">
         </div>
         <div class="form-group" id="champFilter">
-          <label for="tpsJeuxMin">Temps de jeux Minimum</label>
-          <input type="text" id="tpsJeuxMin" class="form-control" formControlName="tpsJeuxMin">
+          <label class="computer" for="tpsJeuxMin">Temps de jeux Minimum</label>
+          <input type="text" id="tpsJeuxMin" class="form-control" formControlName="tpsJeuxMin" placeholder="Temps de jeux Minimum...">
         </div>
         <div class="form-group" id="champFilter">
-          <label for="tpsJeuxMax">Temps de jeux Maximum</label>
-          <input type="text" id="tpsJeuxMax" class="form-control" formControlName="tpsJeuxMax">
+          <label class="computer" for="tpsJeuxMax">Temps de jeux Maximum</label>
+          <input type="text" id="tpsJeuxMax" class="form-control" formControlName="tpsJeuxMax" placeholder="Temps de jeux Maximum...">
         </div>
         <div class="form-group" id="champFilter">
-          <label for="title">Titre Extention</label>
-          <input type="text" id="titleExtention" class="form-control" formControlName="titleExtention">
+          <label class="computer" for="titleExtention">Titre Extention</label>
+          <input type="text" id="titleExtention" class="form-control" formControlName="titleExtention" placeholder="Titre Extention...">
         </div>
-        <div class="form-group">
+        <div class="form-group allScreen">
           <label for="categories2">Catégories</label>
-          <div class="categories">
+          <div class="categories computer">
             <button *ngFor="let cat of categories" [ngClass]="(isCatSelected(cat))?'btn btn-success':'btn btn-dark'" style="margin-left: 1%;margin-top: 1%;width: 122px;"
               type="button" id="categories2" (click)="selectCategorie(cat)">{{ cat }}</button>
           </div>
+          <select multiple class="device" id="categories2">
+            <option *ngFor="let cat of categories" [ngClass]="(isCatSelected(cat))?'option-selected':'option'" (click)="selectCategorie(cat)">{{ cat }}</option>
+          </select>
+      </div>
+
+<div class="rounded boutons">
+  <button class="btn btn-warning" id="btn" type="button" (click)="onReinitSearch()">Réinitialiser la recherche
+  </button>
+            <button class="btn btn-success" type="submit" id="btn">Filter
+            </button>
+      </div>
       </div>
 
 
-      </div>
-
-
-      <div class="rounded float-left boutons">
-        <button class="btn btn-success" type="submit" id="btn">Filter
-        </button>
-        <button class="btn btn-warning" id="btn" type="button" (click)="onReinitSearch()">Réinitialiser la recherche
-        </button>
-      </div>
+      
     </form>
   </div>
 </div>

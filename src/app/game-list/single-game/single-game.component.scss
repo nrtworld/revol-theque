@@ -1,5 +1,13 @@
 // fichier scss
 
+.device{
+    display: none;
+       }
+   
+       .computer{
+   display: inline-block;
+       }
+
 h3{
     margin-top: 5%;
 }
@@ -74,3 +82,39 @@ h3{
     margin-top: 2%;
     cursor: default;
 }
+
+
+//###################################################################################################################
+  //Gestion des écrans mobiles
+  $break-small: 411px;
+  @media screen and (max-width: $break-small) {
+
+    .device{
+        display: inline-block;
+           }
+       
+           .computer{
+       display: none;
+           }
+
+        }
+
+        #smallViewPicture{
+            width: 100%;
+            max-width: 340px;
+            max-height: 340px;
+            margin-top: 5px;        
+        }
+
+        #flex-container-categories{
+            width: 100%;
+            display: flex; 
+            flex-direction: row; 
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .container{
+            text-align: justify;
+            
+        }

@@ -73,6 +73,14 @@ export class GameListComponent implements OnInit, OnDestroy {
     this.router.navigate(['/games','edit',id]);
   }
 
+  getClassCard(game: Game){
+    if(game.isExtention){
+      return "card oneGameContainerExtended";
+    }else{
+      return "card oneGameContainer";
+    }
+  }
+
   ngOnDestroy(){
 this.filterGamesSubscription.unsubscribe();
   }

@@ -201,10 +201,14 @@ if(filter){
 
         if(categories &&tpsJeuxIsOK && nbJoueursIsOK && titleExtentionIsOK && titleIsOK){
           for(let cat of categories){
+            if(game.categories && game.categories.length){
             if(!game.categories.includes(cat)){
               categoriesIsOK = false;
               break;
             }
+          }else{
+            categoriesIsOK = false;
+          }
           }
         }
 

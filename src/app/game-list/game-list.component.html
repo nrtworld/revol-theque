@@ -19,9 +19,9 @@
 
 
     <!--##########################################################################################################################################-->
-    <div class="card"
-      id="oneGameContainer" *ngFor="let game of games; let i = index">
-      <div style="margin-bottom: 100px;" (click)="onViewGame(game)">
+    <div [ngClass]="getClassCard(game)"
+      *ngFor="let game of games; let i = index">
+      <div style="z-index: 200;" (click)="onViewGame(game)">
         <div class="flex-superpose-container computer" style="height: 286px;border-radius: 20px;">
           <div  style="position: relative;margin: auto;">
             <img  *ngIf="game.photo" [src]="game.photo" style="max-width: 270px;max-height: 270px;border-radius: 20px;"/>
@@ -53,6 +53,7 @@
 
 
         <!-- <p class="list-group-item-text">{{ game.categorie }}</p>-->
+        <img  class="photoSmall device" *ngIf="game.photo" [src]="game.photo">
       </div>
 
       <div style="position: absolute; bottom: 0px;height: 70px;width: 100%;">
@@ -61,7 +62,6 @@
 
         <img  class="rounded  button-edit" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fedit.png?alt=media&token=4f4dae2a-b68a-4046-aa40-cc28a2dd5206"
           (click)="onEditGame(game)">
-          <img  class="photoSmall device" *ngIf="game.photo" [src]="game.photo">
       </div>
     </div>
     <!--##########################################################################################################################################-->

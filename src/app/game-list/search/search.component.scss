@@ -1,3 +1,12 @@
+
+    .device{
+        display: none;
+           }
+       
+           .computer{
+       display: inline-block;
+           }
+
 #filter{
     margin-top: 3%;
     margin: auto;
@@ -34,11 +43,10 @@
 
 
 .boutons{
-    display: flex; 
-    flex-direction: row; 
-    flex-wrap: nowrap;
-    width: 18%;
-    align-self: center;
+
+    width: 100%;
+
+    float: right;
    
 }
 
@@ -56,9 +64,79 @@
     max-height: 38px;
     margin-top: 5%;
     margin-left: 5%;
+    float: right;
 }
 
 input{
     background-color: rgba(255, 255, 255, 0.3);
     color: black;
 }
+
+.allScreen{
+    width: 100%;
+}
+
+::placeholder{
+    color: rgba(0, 0, 0, 0.6)
+}
+
+//###################################################################################################################
+  //Gestion des écrans mobiles
+  $break-small: 411px;
+  @media screen and (max-width: $break-small) {
+
+    .device{
+        display: inline-block;
+           }
+       
+           .computer{
+       display: none;
+           }
+    
+           #champFilter{
+            width: 100%;
+            min-width: 175.3px;
+           
+        }
+
+     select{
+         width: 100%;
+         background-color: rgba(255, 255, 255, 0.3);
+     }
+
+     .option-selected{
+        text-align: center;
+        color: black;
+        background-color: tomato;
+    }
+
+    .option{
+        text-align: center;
+        color: black;
+    }
+
+    #flexBody{
+        width: 100%;
+       display: flex; 
+       flex-direction: unset; 
+       flex-wrap: wrap;
+       margin: auto;   
+   }
+
+   #btn{
+    max-height: 38px;
+    margin-left: 5%;
+    
+}
+
+::placeholder{
+    text-align: center;
+}
+
+#boutonFilter{
+    margin-bottom: 15px;
+}
+
+
+
+  }
