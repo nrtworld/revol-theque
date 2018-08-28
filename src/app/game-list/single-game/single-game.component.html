@@ -1,71 +1,82 @@
 <div class="row">
-  <div class="col-xs-12">
-    <div style="width: 100%; text-align: left; margin-top: 2%;">
-      <div class="computer" (click)="onBack()">
+  <div class="col-xs-12 container">
+    <div class="computer flex-container" style="width: 100%; margin-top: 2%;">
+      <button (click)="onBack()" style="background-color: rgb(247, 247, 247,0);border: rgb(247, 247, 247,0)">
         <img id="retour" style="width: 100px; height: 50px;" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Ffaucon%20millenium_yellow.png?alt=media&token=9a508bc1-27d1-4f4c-81b8-aeedbdf4c5cd"
-          data-toggle="tooltip" data-placement="right" title="Retour">
-        <img style="height: 70px;cursor: pointer;" class="rounded float-right" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fedit_yellow.png?alt=media&token=fd81598a-aaa6-4426-b78f-fe3ed6b6d6c1"
-          (click)="onEditGame()">
-      </div>
+          title="Retour">
+      </button>
+      <button style="cursor: pointer;background-color: rgb(247, 247, 247,0);border: rgb(247, 247, 247,0);position: fixed;right: 5px;;" (click)="onEditGame()">
+        <img title="Modifier" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fedit_yellow.png?alt=media&token=fd81598a-aaa6-4426-b78f-fe3ed6b6d6c1"
+          style="height: 70px;width: 124px;">
+      </button>
     </div>
     <!--Pour ordinateur-->
-    <div class="computer" style="margin-top: 2%;">
-      <div id="presentationLeft" class="rounded float-left">
+    <div class="computer container" style="margin-top: 2%;">
+      <div class="flex-container">
+        <div id="presentationLeft">
 
-        <h1>{{ game.title }}</h1>
+          <h1>{{ game.title }}</h1>
 
-        <h2 [ngClass]="game.isExtention? 'collapse show' : 'collapse'">Extension : {{ game.titleExtention }}</h2>
+          <h2 [ngClass]="game.isExtention? 'collapse show' : 'collapse'">Extension : {{ game.titleExtention }}</h2>
 
-        <!--<h3>Catégorie : {{ game.categorie }}</h3>-->
-        <h3>Nombre de joueurs : {{ game.nbJoueursMin }} à {{ game.nbJoueursMax }}</h3>
-        <h3>Temps de jeux : {{ game.tpsJeux }} min</h3>
-        <div class="flex-container">
-          <h3 style="margin-top: 0px;">Catégories : </h3>
-          <div id="flex-container-categories">
-            <div  style="max-width: 80%;">
-              <button *ngFor="let cat of game.categories" id="categories" class="btn btn-success">{{cat}}</button>
-            </div>
-          </div>
-          <div style="width: 100%;">
-            <div class="jumbotron" style="background-color: rgba(255, 255, 255, 0.2);max-width: 80%;margin-top: 5%;">
-              <div class="container" style="opacity: 1;">
-                <h5>{{ game.synopsis }}</h5>
+          <!--<h3>Catégorie : {{ game.categorie }}</h3>-->
+          <h3>Nombre de joueurs : {{ game.nbJoueursMin }} à {{ game.nbJoueursMax }}</h3>
+          <h3>Temps de jeux : {{ game.tpsJeux }} min</h3>
+          <div class="flex-container">
+            <h3 style="margin-top: 0px;">Catégories : </h3>
+            <div id="flex-container-categories">
+              <div style="max-width: 80%;">
+                <button *ngFor="let cat of game.categories" id="categories" class="btn btn-success">{{cat}}</button>
               </div>
             </div>
           </div>
         </div>
+        <img id="smallViewPicture" [src]="game.photo" />
+      </div>
+      <div style="width: 100%;">
+        <div class="text">
+          <div class="container" style="opacity: 1;">
+            <h5>{{ game.synopsis }}</h5>
+          </div>
+        </div>
       </div>
 
-      <img class="rounded float-right" id="smallViewPicture" [src]="game.photo" />
     </div>
     <!--pour iDevice-->
-    <div class="device" style="margin-top: 2%;">
-        
-  
-          <h1>{{ game.title }}</h1>
-  
-          <h2 [ngClass]="game.isExtention? 'collapse show' : 'collapse'">Extension : {{ game.titleExtention }}</h2>
-          
-          <img id="smallViewPicture" [src]="game.photo" />
-          <!--<h3>Catégorie : {{ game.categorie }}</h3>-->
-          <h3>Nombre de joueurs : {{ game.nbJoueursMin }} à {{ game.nbJoueursMax }}</h3>
-          <h3>Temps de jeux : {{ game.tpsJeux }} min</h3>
+    <div class="device container" style="margin-top: 2%;">
 
-            <div id="flex-container-categories">
-              <div  style="max-width: 100%;">
-                <button *ngFor="let cat of game.categories" id="categories" class="btn btn-success">{{cat}}</button>
-              </div>
-            </div>
-            <div style="width: 100%;">
-              <div class="jumbotron" style="background-color: rgba(255, 255, 255, 0.2);max-width: 100%;margin-top: 5%;">
-                <div class="container" style="opacity: 1;">
-                  <h5>{{ game.synopsis }}</h5>
-                </div>
-              </div>
-            </div>
-         
-        
-  
+      <div id="flex-container-titre">
+        <h1>{{ game.title }}</h1>
+
+        <h2 [ngClass]="game.isExtention? 'collapse show' : 'collapse'">Extension : {{ game.titleExtention }}</h2>
       </div>
+      <img id="smallViewPicture" [src]="game.photo" />
+      <!--<h3>Catégorie : {{ game.categorie }}</h3>-->
+
+      <h4>Nombre de joueurs : {{ game.nbJoueursMin }} à {{ game.nbJoueursMax }}</h4>
+      <h4>Temps de jeux : {{ game.tpsJeux }} min</h4>
+
+      <div id="flex-container-categories">
+
+        <button *ngFor="let cat of game.categories" id="categories" class="btn btn-success">{{cat}}</button>
+
+      </div>
+      <div style="width: 100%;">
+        <div class="jumbotron" style="background-color: rgba(255, 255, 255, 0.2);max-width: 100%;margin-top: 5%;">
+          <div class="container" style="opacity: 1;">
+            <h5>{{ game.synopsis }}</h5>
+          </div>
+        </div>
+      </div>
+
+      <div id="flex-container-categories">
+            <button style="cursor: pointer;background-color: rgb(247, 247, 247,0);border: rgb(247, 247, 247,0);margin: auto;" (click)="onEditGame()">
+              <img title="Modifier" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fedit_yellow.png?alt=media&token=fd81598a-aaa6-4426-b78f-fe3ed6b6d6c1"
+                style="height: 70px;width: 124px;">
+            </button>
+  
+        </div>
+
+    </div>
   </div>
 </div>

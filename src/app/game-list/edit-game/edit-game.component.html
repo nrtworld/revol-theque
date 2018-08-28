@@ -1,4 +1,4 @@
-<div (click)="onBack()" class="rounded float-left">
+<div (click)="onBack()" class="rounded float-left computer">
   <img id="retour" style="width: 100px; height: 50px;" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Ffaucon%20millenium_yellow.png?alt=media&token=9a508bc1-27d1-4f4c-81b8-aeedbdf4c5cd"
     data-toggle="tooltip" data-placement="right" title="Retour">
 </div>
@@ -20,45 +20,84 @@
         <input type="text" id="titleExtention" formControlName="titleExtention" class="form-control">
       </div>
       <div class="form-group">
-        <h4>changer la photo</h4>
-        <div dropzone="copy" id="dropzone" (dragover)="false" (dragend)="false" type="file" (drop)="getImageDropped($event)">
-          <p style="margin: auto;margin-top: 33px;" *ngIf="!photo">Placer l'image ici!</p>
-          <img [src]="photo" *ngIf="photo">
+          <h4>Ajouter une photo</h4>
+          <div class="computer" dropzone="copy" id="dropzone" (dragover)="false" (dragend)="false" type="file" (drop)="getImageDropped($event)" (click)="onFindImage();">
+            <p style="margin: auto;margin-top: 23px;" *ngIf="!fileUploaded">Glisser/déposer l'image ici!</p>
+            <p style="margin: auto;" *ngIf="!fileUploaded">Cliquer pour recherche google!</p>
+            <img [src]="fileUrl" *ngIf="fileUploaded">
+          </div>
+          <div class="device" id="urlImage">
+            <img id="downloadedImg" class="device" [src]="fileUrl" *ngIf="fileUploaded">
+            <div class="flex-container-img">
+              <input type="text" id="inputImg" formControlName="urlImage" class="form-control device" placeholder="Enter l'URL de l'image ici..."
+                (change)="getImageFromUrl('url')">
+                  <img (click)="onFindImage()" 
+                  class="btn btn-outline-light device" 
+                  src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Floupe%20google.png?alt=media&token=49ce6eed-d194-41ae-a746-03b6c2656b35">
+                
+            </div>
+          </div>
+          <div *ngIf="fileIsUploading" class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0"
+              aria-valuemax="100" style="width: 100%"></div>
+          </div>
+          <p class="text-success" *ngIf="fileUploaded">Fichier chargé !</p>
+          <!--  <button id="searchImgButton" type="button" class="btn btn-warning computer" (click)="onFindImage()">trouver image</button> -->
         </div>
-        <div *ngIf="fileIsUploading" class="progress">
-          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0"
-            aria-valuemax="100" style="width: 100%"></div>
-        </div>
-        <p class="text-success" *ngIf="fileUploaded">Fichier chargé !</p>
-        <button type="button" class="btn btn-warning" (click)="onFindImage()">trouver image</button>
-      </div>
 
       <!--#############################################################################################################################################-->
       <div class="form-group">
         <label for="categories2">Catégories</label>
-        <span id="flex-container-categories">
-          <select class="form-control" multiple style="background-color: rgba(255, 255, 255, 0.3);width: 40%;">
-            <option [ngClass]="getSelectedClass(cat)" *ngFor="let cat of categories" (click)="preSelectCategorie(cat)">{{cat}}</option>
-            <option style="color: black;" (click)="addNewCategorieOrNot();"> + une catégorie</option>
-          </select>
-          <div id="BB8">
-            <img style="width: 100%;" (click)="selectCategories()" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fdroid_run%20(1).gif?alt=media&token=32461aa9-4116-451f-9939-b36ffe0665ab">
-            <img style="width: 100%; margin-top: 5%;" (click)="deSelectCategories()" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Ftatooine-r2d2-c3p0.gif?alt=media&token=840972f1-9901-4050-a24c-cee649f05ae1">
-          </div>
-          <select class="form-control" multiple style="width: 40%;background-color: rgba(255, 255, 255, 0.3);" id="Catégorie2">
-            <option [ngClass]="getDeSelectedClass(cat)" *ngFor="let cat of categories2" (click)="preDeSelectCategorie(cat)">{{cat}}</option>
-          </select>
-        </span>
-      </div>
-      <form [formGroup]="categorieForm" (ngSubmit)="onSaveCategorie()" [ngClass]="wantNewCategorie?'collapse show' : 'collapse'">
-        <div class="form-group">
-          <label for="newCategorie">Nouvelle Catégorie</label>
-          <input id="newCategorie" type="text" class="form-Control" formControlName="newCategorie" style="margin-left: 10px;">
-          <button class="btn btn-success" [disabled]="categorieForm.invalid" type="submit" style="margin-left: 10px;">OK
-          </button>
-          <button class="btn btn-warning" type="button" style="margin-left: 10px;" (click)="addNewCategorieOrNot()">X</button>
+        <span class="flex-container-categories">
+
+            <select class="form-control" multiple>
+              <option [ngClass]="getSelectedClass(cat)" *ngFor="let cat of categories" (click)="preSelectCategorie(cat)">{{cat}} </option>
+              <option style="color: black;" (click)="addNewCategorieOrNot();"> + une catégorie</option>
+            </select>
+            <div class="device">
+                <form [formGroup]="categorieForm" (ngSubmit)="onSaveCategorie()" [ngClass]="wantNewCategorie?'collapse show' : 'collapse'">
+                  <div class="form-group">
+                    <label id="label" for="newCategorie">Nouvelle Catégorie</label>
+                    <input id="newCategorie" type="text" class="form-Control" formControlName="newCategorie" style="margin-left: 10px;" placeholder="Nouvelle catégorie...">
+                    <button class="btn btn-success" [disabled]="categorieForm.invalid" type="submit" style="margin-left: 10px;">OK
+                    </button>
+                    <button class="btn btn-warning" type="button" style="margin-left: 10px;" (click)="addNewCategorieOrNot()">X</button>
+                  </div>
+                </form>
+              </div>
+            <div id="BB8" style="margin: auto;">
+              <img class="computer" (click)="selectCategories()" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fdroid_run%20(1).gif?alt=media&token=32461aa9-4116-451f-9939-b36ffe0665ab">
+              <img class="computer" id="img2" (click)="deSelectCategories()" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Ftatooine-r2d2-c3p0.gif?alt=media&token=840972f1-9901-4050-a24c-cee649f05ae1">
+              <img class="device" (click)="selectCategories()" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fr2d2_fall.gif?alt=media&token=5eb07d6b-06d2-45e4-a3ac-9c1a11087ba2">
+              <img class="device" id="img2" (click)="deSelectCategories()" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fr2d2_flight.gif?alt=media&token=b1a20809-4eaa-46ab-94b3-7f614791bbea">
+            </div>
+            <select class="form-control" multiple id="Catégorie2">
+              <option [ngClass]="getDeSelectedClass(cat)" *ngFor="let cat of categories2" (click)="preDeSelectCategorie(cat)">{{cat}}</option>
+            </select>
+            <div [ngClass]="categories3.length>0?'flex-container-categories-column collapse show': 'collapse'" style="position: absolute;z-index: 150;width: 100%;">
+              <span class="flex-container-categories-column" style="margin: auto;width: 100%">
+                <h5 style="margin: auto;" for="categories3">cliquez sur les catégories à valider</h5>
+                <select multiple style="width: 50%;background-color: rgb(0, 0, 0);margin: auto;margin-top: 3%;" id="Catégorie3">
+                  <option *ngFor="let cat of categories3" (click)="validNewCat(cat)" style="color:  yellow;text-align: center;text-size-adjust: inherit">{{cat}}</option>
+                </select>
+  
+                <button class="btn btn-light" type="button" style="margin: auto;margin-top: 2%;margin-right: 47%;" (click)="removeCategories3()">FERMER
+                </button>
+              </span>
+            </div>
+          </span>
         </div>
-      </form>
+        <div class="computer">
+        <form [formGroup]="categorieForm" (ngSubmit)="onSaveCategorie()" [ngClass]="wantNewCategorie?'collapse show' : 'collapse'">
+          <div class="form-group">
+            <label id="label" for="newCategorie">Nouvelle Catégorie</label>
+            <input id="newCategorie" type="text" class="form-Control" formControlName="newCategorie" style="margin-left: 10px;" placeholder="Nouvelle catégorie...">
+            <button class="btn btn-success" [disabled]="categorieForm.invalid" type="submit" style="margin-left: 10px;">OK
+            </button>
+            <button class="btn btn-warning" type="button" style="margin-left: 10px;" (click)="addNewCategorieOrNot()">X</button>
+          </div>
+        </form>
+      </div>
       <!--#############################################################################################################################################-->
 
 

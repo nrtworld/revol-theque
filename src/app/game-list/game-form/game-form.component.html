@@ -21,12 +21,12 @@
       </div>
       <div class="form-group">
         <h4>Ajouter une photo</h4>
-        <div dropzone="copy" id="dropzone" (dragover)="false" (dragend)="false" type="file" (drop)="getImageDropped($event)" (click)="onFindImage();">
+        <div class="computer" dropzone="copy" id="dropzone" (dragover)="false" (dragend)="false" type="file" (drop)="getImageDropped($event)" (click)="onFindImage();">
           <p style="margin: auto;margin-top: 23px;" *ngIf="!fileUploaded">Glisser/déposer l'image ici!</p>
           <p style="margin: auto;" *ngIf="!fileUploaded">Cliquer pour recherche google!</p>
           <img [src]="fileUrl" *ngIf="fileUploaded">
         </div>
-        <div id="urlImage">
+        <div class="device" id="urlImage">
           <img id="downloadedImg" class="device" [src]="fileUrl" *ngIf="fileUploaded">
           <div class="flex-container-img">
             <input type="text" id="inputImg" formControlName="urlImage" class="form-control device" placeholder="Enter l'URL de l'image ici..."

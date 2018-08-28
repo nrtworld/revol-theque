@@ -23,6 +23,7 @@ export class EditGameComponent implements OnInit, OnDestroy {
   gameForm: FormGroup;
   categories: string[] = [];
   categories2: string[] = [];
+  categories3: string[] = [];
   preSelectedCategories: string[] = [];
   preDeSelectedCategories: string[] = [];
   categoriesGamesSubscription = new Subscription;
@@ -62,6 +63,8 @@ export class EditGameComponent implements OnInit, OnDestroy {
       (game: Game)=>{
         this.game = game;
         this.photo = game.photo?game.photo:"";
+        this.fileUrl = this.photo;
+        this.fileUploaded = this.fileUrl?true:false;
         this.oldPhoto = game.photo;
         
         this.gameForm.get('title').setValue(this.game.title);
@@ -87,6 +90,7 @@ export class EditGameComponent implements OnInit, OnDestroy {
   initForm(){
     this.gameForm = this.formBuilder.group({
       title: ['', Validators.minLength(1)],
+      urlImage: [''],
       categories: [''],
       isExtention: [''],
       titleExtention: [''],
@@ -211,6 +215,16 @@ const id = this.route.snapshot.params['id'];
     this.addNewCategorieOrNot();
   }
 
+  onSaveWikiCategorie(newCat: string) {
+
+    if (newCat && newCat !== 'nouvelle catégorie') {
+      this.categoriesGamesService.createNewCategorie(newCat);
+      this.preSelectedCategories = [];
+      this.preDeSelectCategorie(newCat);
+      this.selectCategories();
+    }
+  }
+
   getImageDropped(event: DragEvent) {
     event.preventDefault();
     event.stopPropagation();
@@ -226,21 +240,7 @@ const id = this.route.snapshot.params['id'];
         file.getAsString(
           (s) => {
             console.log('string reçu : ' + s);
-            this._http.get(s, {
-              responseType: 'blob', headers: {
-                'Content-Type': 'blob'
-              }
-            }).subscribe((data: any) => {
-              console.log('data : ' + data.toString());
-              var filetab = s.toString().split('.');
-              var fileExtention = filetab.pop().split('/').shift();
-              var fileName = this.gameForm.get('title').value + (this.thisIsAnExtention?'_'+this.gameForm.get('titleExtention').value:'' ) + '.'+fileExtention;
-              console.log('fichier : '+ fileName)
-             img = this.blobToFile(data,fileName);
-             this.onUploadFile(img);
-            },(error)=>{
-              console.log('erreur de récupération d\'url : ' + error.toString());
-            });
+            img = this.getImageFromUrl(s);
           }
         );
       } else if (file.kind == 'file' && file.type.match('^image/')) {
@@ -249,6 +249,29 @@ const id = this.route.snapshot.params['id'];
       }
       ++index;
     }
+  }
+
+  private getImageFromUrl(s: string) {
+    if(s=='url'){
+      s = this.gameForm.get('urlImage').value;
+    }
+    var img: File;
+    this._http.get(s, {
+      responseType: 'blob', headers: {
+        'Content-Type': 'blob'
+      }
+    }).subscribe((data: any) => {
+      console.log('data : ' + data.toString());
+      var filetab = s.toString().split('.');
+      var fileExtention = filetab.pop().split('/').shift();
+      var fileName = this.gameForm.get('title').value + (this.thisIsAnExtention ? '_' + this.gameForm.get('titleExtention').value : '') + '.' + fileExtention;
+      console.log('fichier : ' + fileName);
+      img = this.blobToFile(data, fileName);
+      this.onUploadFile(img);
+    }, (error) => {
+      console.log('erreur de récupération d\'url : ' + error.toString());
+    });
+    return img;
   }
 
   public blobToFile = (theBlob: Blob, fileName:string): File => {
@@ -290,5 +313,14 @@ onFindImage(){
     }else{
       return this.OPTION_NOT_SELECTED_CAT2;
     }
+  }
+
+  validNewCat(cat: string) {
+    this.onSaveWikiCategorie(cat);
+    this.categories3.splice(this.categories3.indexOf(cat), 1);
+  }
+
+  removeCategories3(){
+    this.categories3 = [];
   }
 }

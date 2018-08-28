@@ -5,7 +5,7 @@
        }
    
        .computer{
-   display: inline-block;
+   display: block;
        }
 
 h3{
@@ -19,11 +19,12 @@ h3{
     margin-top: 140px;
     height: auto;
     vertical-align: middle;
+    margin: auto;
 
 }
 #presentationLeft{
     max-width: 69%;
-
+    margin: auto;
     text-align: justify;
 }
 
@@ -59,62 +60,95 @@ h3{
     width: 100%;
     display: flex; 
     flex-direction: row; 
-    flex-wrap: wrap
+    flex-wrap: wrap;
 }
 
 .flex-container{
     width: 100%;
     display: flex; 
     flex-direction: row; 
-    flex-wrap: wrap
+    flex-wrap: wrap;
+    margin: auto;
 }
 
 #flex-container-titre{
     width: 100%;
     display: flex; 
     flex-direction: row; 
-    flex-wrap: nowrap
-    
+    flex-wrap: wrap;
+    text-align: center;
+    margin: auto;
 }
 
 #categories{
-    margin-left: 10px;
+    margin-left:10px;
     margin-top: 2%;
     cursor: default;
+}
+
+.container{
+    width: 100%;
+    margin: auto;
+}
+
+.text{
+    background-color: rgba(255, 255, 255, 0.2);
+    margin-top: 10%;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
 }
 
 
 //###################################################################################################################
   //Gestion des écrans mobiles
   $break-small: 411px;
-  @media screen and (max-width: $break-small) {
+  $break-small-height: 411px;
+  @media screen and (max-width: $break-small) , screen and (max-height: $break-small-height) {
 
     .device{
-        display: inline-block;
+        display: block;
            }
        
            .computer{
        display: none;
            }
 
-        }
-
-        #smallViewPicture{
-            width: 100%;
+           
+           #smallViewPicture{
+               width: 100%;
             max-width: 340px;
             max-height: 340px;
             margin-top: 5px;        
         }
 
+        #flex-container-titre{
+    
+           display: inline;
+            margin: auto
+        }
+        
         #flex-container-categories{
             width: 100%;
             display: flex; 
             flex-direction: row; 
             flex-wrap: wrap;
-            align-items: center;
+            margin: auto;
+            margin-top: 20px;
         }
-
+        
         .container{
+            width: 100%;
+            margin: auto;
             text-align: justify;
             
         }
+        
+        #categories{
+            margin: auto;
+            margin-top: 10px;
+        }
+
+        
+    }
