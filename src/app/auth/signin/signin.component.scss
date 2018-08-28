@@ -16,7 +16,8 @@ input{
 //###################################################################################################################
   //Gestion des écrans mobiles
   $break-small: 411px;
-  @media screen and (max-width: $break-small) {
+  $break-small-height: 411px;
+  @media screen and (max-width: $break-small) , screen and (max-height: $break-small-height)  {
 
   .computeur{
       display: none;
