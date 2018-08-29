@@ -15,11 +15,10 @@ export class PageNotFoundComponent implements OnInit {
   isClicked: boolean = false;
   isClicked2: boolean = false;
 
-  constructor(private appComponante : AppComponent,
-  private location: Location) { }
+  constructor( private location: Location) { }
 
   ngOnInit() {
-    this.appComponante.isNotFound = true;
+    
   }
 
   goBack(){

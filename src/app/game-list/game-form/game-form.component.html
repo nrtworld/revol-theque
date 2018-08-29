@@ -50,6 +50,7 @@
         <span class="flex-container-categories">
 
           <select class="form-control" multiple>
+              <option class="device option" disabled selected>Catégories...</option>
             <option [ngClass]="getSelectedClass(cat)" *ngFor="let cat of categories" (click)="preSelectCategorie(cat)">{{cat}} </option>
             <option style="color: black;" (click)="addNewCategorieOrNot();"> + une catégorie</option>
           </select>
@@ -71,6 +72,7 @@
             <img class="device" id="img2" (click)="deSelectCategories()" src="https://firebasestorage.googleapis.com/v0/b/revol-theque.appspot.com/o/icones%2Fr2d2_flight.gif?alt=media&token=b1a20809-4eaa-46ab-94b3-7f614791bbea">
           </div>
           <select class="form-control" multiple id="Catégorie2">
+              <option class="device option" disabled selected>Catégories...</option>
             <option [ngClass]="getDeSelectedClass(cat)" *ngFor="let cat of categories2" (click)="preDeSelectCategorie(cat)">{{cat}}</option>
           </select>
           <div [ngClass]="categories3.length>0?'flex-container-categories-column collapse show': 'collapse'" style="position: absolute;z-index: 150;width: 100%;">

@@ -20,6 +20,9 @@ import { FilterGamesService } from './services/filterGames.service';
 import { DataCollectorComponent } from './data-collector/data-collector.component';
 import { DataCollectorService } from './services/dataCollector.service';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { MoviesListComponent } from './movies-list/movies-list.component';
+import { BooksListComponent } from './books-list/books-list.component';
+import { StarterPageComponent } from './starter-page/starter-page.component';
 
 const appRoutes: Routes = [
   { path: 'auth/signup', component: SignupComponent },
@@ -30,7 +33,10 @@ const appRoutes: Routes = [
   { path: 'games/edit/:id', canActivate: [AuthGuardService], component: EditGameComponent },
   { path: 'dataCollector', canActivate: [AuthGuardService], component: DataCollectorComponent },
   { path: '404NotFound', canActivate: [AuthGuardService], component: PageNotFoundComponent },
-  {path: '', redirectTo: 'games', pathMatch: 'full'},
+  {path: 'books', canActivate: [AuthGuardService], component: BooksListComponent },
+  {path: 'movies', canActivate: [AuthGuardService], component: MoviesListComponent },
+  {path: 'starter', canActivate: [AuthGuardService], component: StarterPageComponent },
+  {path: '', redirectTo: 'starter', pathMatch: 'full'},
   { path: '**', redirectTo: '404NotFound' }
 ];
 //AIzaSyDkZ3pta-PPYzk7VBw-ul9BL75oiFwPUzs
@@ -48,7 +54,10 @@ const appRoutes: Routes = [
     EnumToArrayPipe,
     SearchComponent,
     DataCollectorComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    MoviesListComponent,
+    BooksListComponent,
+    StarterPageComponent
   ],
   imports: [
     BrowserModule,

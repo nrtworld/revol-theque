@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { FiltreGame } from '../models/filtreGame.model';
 import { FilterGamesService } from '../services/filterGames.service';
 import { SearchComponent } from './search/search.component';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-game-list',
@@ -13,7 +14,6 @@ import { SearchComponent } from './search/search.component';
   styleUrls: ['./game-list.component.scss']
 })
 export class GameListComponent implements OnInit, OnDestroy {
-
   games: Game[];
   gamesSubscription: Subscription;
   filterGames: FiltreGame;
@@ -56,7 +56,7 @@ export class GameListComponent implements OnInit, OnDestroy {
   }
 
   onDeleteGame(game: Game){
-    if(confirm('Voulez-vous réellement supprimer ce jeux de votre ludothèque ?')){
+    if(confirm('Voulez-vous réellement supprimer '+ game.title.toLocaleUpperCase() +' de votre ludothèque ?')){
     this.gameService.removeGame(game);
     }else{
       return null;

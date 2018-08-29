@@ -33,6 +33,7 @@
               type="button" id="categories2" (click)="selectCategorie(cat)">{{ cat }}</button>
           </div>
           <select multiple class="device" id="categories2">
+            <option class="device" disabled selected>Catégories...</option>
             <option *ngFor="let cat of categories" [ngClass]="(isCatSelected(cat))?'option-selected':'option'" (click)="selectCategorie(cat)">{{ cat }}</option>
           </select>
       </div>

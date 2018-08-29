@@ -9,7 +9,6 @@ import { FilterGamesService } from './services/filterGames.service';
 })
 export class AppComponent {
   title = 'RevolThèque';
-  isNotFound: boolean = false;
 
 
   constructor(){
@@ -25,6 +24,14 @@ export class AppComponent {
     firebase.initializeApp(config);
 
     
+  }
+
+  getActivateStatus(){
+    if(location.pathname == '/404NotFound' || location.pathname == '/auth/signup' || location.pathname == '/auth/signin'){
+      return false;
+    }else{
+      return true;
+    }
   }
 
 }

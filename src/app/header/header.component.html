@@ -1,10 +1,16 @@
 
 <nav class="navbar navbar-default">
   <div class="container-fluid">
-    <ul class="nav nav-pills">
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link active" routerLink="games">Jeux de sociétés</a>
+    <ul class="nav nav-pills" *ngIf="getActivateStatus();">
+      <li class="nav-item " routerLinkActive="active">
+        <a [ngClass]="getclassNavPills('/games')" routerLink="games" >Jeux de sociétés</a>
       </li>
+      <li class="nav-item" routerLinkActive="active">
+          <a [ngClass]="getclassNavPills('/movies')" routerLink="movies" >DVDs/BLU-RAYs</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+            <a [ngClass]="getclassNavPills('/books')" routerLink="books" >Livres</a>
+          </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
     <!--   <li  routerLinkActive="active" *ngIf="!isAuth">

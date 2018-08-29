@@ -31,6 +31,12 @@
     width: 150px;
 }
 
+.flex-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
 #sousMenu:hover{
     z-index: 600;
     cursor: pointer;

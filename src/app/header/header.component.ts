@@ -24,9 +24,11 @@ openMenu: boolean = false;
         }
       }
     );
+
   }
   
   onSignOut(){
+    this.openCloseMenu();
     this.authService.signOutuser();
   }
 
@@ -34,4 +36,20 @@ openMenu: boolean = false;
     this.openMenu = !this.openMenu;
   }
 
+  getclassNavPills(pill: string){
+    location.pathname
+    if(location.pathname == pill){
+      return "nav-link active"
+    }else{
+      return "nav-link"
+    }
+  }
+
+  getActivateStatus(){
+    if(location.pathname == '/starter'){
+      return false;
+    }else{
+      return true;
+    }
+  }
 }
