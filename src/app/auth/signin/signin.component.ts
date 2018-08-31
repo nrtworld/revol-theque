@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { FilterGamesService } from '../../services/filterGames.service';
+import { FilterGamesService } from '../../services/Game/filterGames.service';
 
 @Component({
   selector: 'app-signin',

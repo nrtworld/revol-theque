@@ -1,31 +1,27 @@
 import { Component, OnInit, Pipe, PipeTransform, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { GamesService } from '../../services/Game/games.service';
 import { Router } from '@angular/router';
-import { Game } from '../../models/Game/game.model';
-import { GamesCategories } from '../../models/gamesCategorie.enum';
 import { Location } from '@angular/common';
-import { CategoriesGamesService } from '../../services/Game/categoriesGames.service';
 import { Subscription } from 'rxjs';
 import { Collector } from '../../models/collector.model';
 import { DataCollectorService } from '../../services/dataCollector.service';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'app-game-form',
-  templateUrl: './game-form.component.html',
-  styleUrls: ['./game-form.component.scss']
+  selector: 'app-movie-form',
+  templateUrl: './movie-form.component.html',
+  styleUrls: ['./movie-form.component.scss']
 })
-export class GameFormComponent implements OnInit, OnDestroy {
+export class MovieFormComponent implements OnInit, OnDestroy {
 
   categorieForm: FormGroup;
-  gameForm: FormGroup;
+  movieForm: FormGroup;
   categories: string[] = [];
   categories2: string[] = [];
   categories3: string[] = [];
   preSelectedCategories: string[] = [];
   preDeSelectedCategories: string[] = [];
-  categoriesGamesSubscription = new Subscription;
+  categoriesMoviesSubscription = new Subscription;
   urlImgStart: string = 'http://images.google.com/search?tbm=isch&q=';
   fileIsUploading = false;
   fileUrl: string;
@@ -47,7 +43,7 @@ export class GameFormComponent implements OnInit, OnDestroy {
 
   constructor(private _http: HttpClient,
     private formBuilder: FormBuilder,
-    private gameService: GamesService,
+    private movieService: MovieService,
     private router: Router,
     private location: Location,
     private categoriesGamesService: CategoriesGamesService,
@@ -321,19 +317,3 @@ preSelectCategorie(cat: string){
   }
 
 }
-
-@Pipe({
-  name: 'enumToArray'
-})
-export class EnumToArrayPipe implements PipeTransform {
-  transform(data: Object) {
-    const keys = Object.keys(data);
-    return keys.slice(keys.length / 2);
-  }
-}
-
-
-
-
-
-

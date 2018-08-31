@@ -1,6 +1,6 @@
 import { Component, Pipe, PipeTransform, OnInit, OnDestroy } from '@angular/core';
 import * as firebase from 'firebase';
-import { FilterGamesService } from './services/filterGames.service';
+import { FilterGamesService } from './services/Game/filterGames.service';
 
 @Component({
   selector: 'app-root',

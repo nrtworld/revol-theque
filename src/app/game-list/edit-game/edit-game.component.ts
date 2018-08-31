@@ -1,12 +1,12 @@
 import { Component, OnInit, Pipe, PipeTransform, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { GamesService } from '../../services/games.service';
+import { GamesService } from '../../services/Game/games.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Game } from '../../models/game.model';
+import { Game } from '../../models/Game/game.model';
 import { GamesCategories } from '../../models/gamesCategorie.enum';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
-import { CategoriesGamesService } from '../../services/categoriesGames.service';
+import { CategoriesGamesService } from '../../services/Game/categoriesGames.service';
 import { HttpClient } from '@angular/common/http';
 
 @Component({

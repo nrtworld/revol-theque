@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Game } from '../models/game.model';
+import { Game } from '../models/Game/game.model';
 import { Subscription } from 'rxjs';
-import { GamesService } from '../services/games.service';
+import { GamesService } from '../services/Game/games.service';
 import { Router } from '@angular/router';
-import { FiltreGame } from '../models/filtreGame.model';
-import { FilterGamesService } from '../services/filterGames.service';
+import { FiltreGame } from '../models/Game/filtreGame.model';
+import { FilterGamesService } from '../services/Game/filterGames.service';
 import { SearchComponent } from './search/search.component';
 import { HeaderComponent } from '../header/header.component';
 

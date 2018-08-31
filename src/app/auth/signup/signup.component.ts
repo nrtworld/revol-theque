@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { ConfirmPassword } from '../../validators/confirmPassword.validator';
-import { FilterGamesService } from '../../services/filterGames.service';
+import { FilterGamesService } from '../../services/Game/filterGames.service';
 
 @Component({
   selector: 'app-signup',
@@ -41,7 +41,7 @@ export class SignupComponent implements OnInit {
    
     this.authService.createNewUser(email, password).then(
       ()=>{
-        this.router.navigate(['/games']);
+        this.router.navigate(['/starter']);
       },
       (error)=>{
         this.errorMessage = error;

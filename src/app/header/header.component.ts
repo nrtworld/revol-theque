@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import * as firebase from 'firebase';
+import { GamesService } from '../services/Game/games.service';
 
 @Component({
   selector: 'app-header',
@@ -12,7 +13,7 @@ export class HeaderComponent implements OnInit {
   isAuth: boolean;
 openMenu: boolean = false;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,private gameService: GamesService) { }
 
   ngOnInit() {
     firebase.auth().onAuthStateChanged(
@@ -29,6 +30,7 @@ openMenu: boolean = false;
   
   onSignOut(){
     this.openCloseMenu();
+    this.gameService.removeLocalGames();
     this.authService.signOutuser();
   }
 

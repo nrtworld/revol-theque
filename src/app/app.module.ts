@@ -10,19 +10,22 @@ import { GameFormComponent, EnumToArrayPipe } from './game-list/game-form/game-f
 import { HeaderComponent } from './header/header.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { AuthService } from './services/auth.service';
-import { GamesService } from './services/games.service';
+import { GamesService } from './services/Game/games.service';
 import { HttpClientModule } from '@angular/common/http';
 import {Routes, RouterModule} from '@angular/router';
 import { EditGameComponent } from './game-list/edit-game/edit-game.component';
 import { SearchComponent } from './game-list/search/search.component';
-import { CategoriesGamesService } from './services/categoriesGames.service';
-import { FilterGamesService } from './services/filterGames.service';
+import { CategoriesGamesService } from './services/Game/categoriesGames.service';
+import { FilterGamesService } from './services/Game/filterGames.service';
 import { DataCollectorComponent } from './data-collector/data-collector.component';
 import { DataCollectorService } from './services/dataCollector.service';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { MoviesListComponent } from './movies-list/movies-list.component';
 import { BooksListComponent } from './books-list/books-list.component';
 import { StarterPageComponent } from './starter-page/starter-page.component';
+import { SingleMovieComponent } from './movies-list/single-movie/single-movie.component';
+import { MovieFormComponent } from './movies-list/movie-form/movie-form.component';
+import { EditMovieComponent } from './movies-list/edit-movie/edit-movie.component';
 
 const appRoutes: Routes = [
   { path: 'auth/signup', component: SignupComponent },
@@ -57,7 +60,10 @@ const appRoutes: Routes = [
     PageNotFoundComponent,
     MoviesListComponent,
     BooksListComponent,
-    StarterPageComponent
+    StarterPageComponent,
+    SingleMovieComponent,
+    MovieFormComponent,
+    EditMovieComponent
   ],
   imports: [
     BrowserModule,

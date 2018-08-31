@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import * as firebase from 'firebase';
+import { GamesService } from '../services/Game/games.service';
 
 @Component({
   selector: 'app-starter-page',
@@ -7,9 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StarterPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private gameService: GamesService) { }
 
   ngOnInit() {
+    this.gameService.getGames();
   }
 
 }

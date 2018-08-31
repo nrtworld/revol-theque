@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { GamesService } from '../services/games.service';
+import { GamesService } from '../services/Game/games.service';
 
 
 

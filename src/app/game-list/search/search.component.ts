@@ -2,13 +2,13 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { GameListComponent } from '../game-list.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GamesCategories } from '../../models/gamesCategorie.enum';
-import { GamesService } from '../../services/games.service';
-import { Game } from '../../models/game.model';
+import { GamesService } from '../../services/Game/games.service';
+import { Game } from '../../models/Game/game.model';
 import { isNull } from 'util';
-import { FiltreGame } from '../../models/filtreGame.model';
-import { FilterGamesService } from '../../services/filterGames.service';
+import { FiltreGame } from '../../models/Game/filtreGame.model';
+import { FilterGamesService } from '../../services/Game/filterGames.service';
 import { Subscription } from 'rxjs';
-import { CategoriesGamesService } from '../../services/categoriesGames.service';
+import { CategoriesGamesService } from '../../services/Game/categoriesGames.service';
 
 @Component({
   selector: 'app-search',
